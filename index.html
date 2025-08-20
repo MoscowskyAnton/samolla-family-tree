@@ -25,6 +25,7 @@
     .then(data => {
       var family = new FamilyTree(document.getElementById("tree"), {
         enableSearch: true,
+        enableUpTreeExpand: false,
         mouseScroll: FamilyTree.action.zoom,
         template: 'hugo',        
         showYScroll: FamilyTree.scroll.visible,
