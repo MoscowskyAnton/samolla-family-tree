@@ -10,13 +10,7 @@
       width: 100%;
       height: 600px;
       border: 1px solid #ccc;
-    }
-    .ft-edit-photo img {
-      width: 100% !important;
-      height: auto !important;
-      object-fit: contain !important;
-      border-radius: 8px;
-    }
+    }    
   </style>
 </head>
 <body>
@@ -52,6 +46,16 @@
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
               { type: 'date', label: 'Date Of Birth', binding: 'born' },
+              {
+                type: 'link', // тип ссылки
+                label: 'Сайт',
+                binding: 'website', // в данных узла должен быть ключ website с URL
+                url: function(node){
+                  return node.website || '#';
+                },
+                target: '_blank' // открывать в новой вкладке
+              },
+              { type: 'textbox', label: 'Город', binding: 'city' },
           ]
         },
         nodes: data
