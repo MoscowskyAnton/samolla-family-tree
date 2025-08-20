@@ -58,6 +58,15 @@
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
               { type: 'date', label: 'Date Of Birth', binding: 'born' },
+              {
+                type: 'link', // тип ссылки
+                label: 'Сайт',
+                binding: 'website', // в данных узла должен быть ключ website с URL
+                url: function(node){
+                  return node.website || '#';
+                },
+                target: '_blank' // открывать в новой вкладке
+              },
           ]
         },
         nodes: data
