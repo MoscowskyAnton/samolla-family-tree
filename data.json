@@ -1,48 +1,22 @@
 {
   "dogs": [
-    {
-      "name": "Тарас",
-      "sex": "male",
-      "photo": "images/father1.jpg"
-    },
-    {
-      "name": "Аня",
-      "sex": "female",
-      "photo": "images/mother1.jpg"
-    },
-    {
-      "name": "Палка",
-      "sex": "female",
-      "photo": "images/father2.jpg"
-    },
-    {
-      "name": "Драккар",
-      "sex": "male",
-      "photo": "images/puppy1.jpg"
-    },
-    {
-      "name": "Милки",
-      "sex": "male",
-      "photo": "images/puppy2.jpg"
-    },
-    {
-      "name": "Сарра",
-      "sex": "female",
-      "photo": "images/sarra.png"
-    }
+    {"name": "Отец 1","sex": "male","photo": "images/father1.jpg"},
+    {"name": "Мать 1","sex": "female","photo": "images/mother1.jpg"},
+    {"name": "Отец 2","sex": "male","photo": "images/father2.jpg"},
+    {"name": "Щенок 1-1","sex": "male","photo": "images/puppy1.jpg"},
+    {"name": "Щенок 1-2","sex": "female","photo": "images/puppy2.jpg"},
+    {"name": "Щенок 2-1","sex": "female","photo": "images/puppy3.jpg"}
   ],
   "litters": [
     {
-      "name": "Помёт 1",
-      "father": "Тарас",
-      "mother": "Аня",
-      "puppies": ["Драккар", "Милки"]
+      "father": "Отец 1",
+      "mother": "Мать 1",
+      "puppies": ["Щенок 1-1", "Щенок 1-2"]
     },
     {
-      "name": "Помёт 2",
-      "father": "Тарас",
-      "mother": "Палка",
-      "puppies": ["Сарра"]
+      "father": "Отец 2",
+      "mother": "Мать 1",
+      "puppies": ["Щенок 2-1"]
     }
   ]
 }
