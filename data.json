@@ -1,34 +1,48 @@
 {
-  "father": {
-    "id": "dog1",
-    "name": "Тарас",
-    "sex": "male",
-    "photo": "https://placedog.net/60/60?id=1"
-  },
-  "mother": {
-    "id": "dog2",
-    "name": "Палка",
-    "sex": "female",
-    "photo": "https://placedog.net/60/60?id=2"
-  },
-  "litter": [
+  "dogs": [
     {
-      "id": "dog3",
-      "name": "Аскеладд",
+      "name": "Тарас",
       "sex": "male",
-      "photo": "https://placedog.net/60/60?id=3"
+      "photo": "images/father1.jpg"
     },
     {
-      "id": "dog4",
-      "name": "Кояш",
-      "sex": "male",
-      "photo": "https://placedog.net/60/60?id=4"
+      "name": "Аня",
+      "sex": "female",
+      "photo": "images/mother1.jpg"
     },
     {
-      "id": "dog5",
+      "name": "Палка",
+      "sex": "female",
+      "photo": "images/father2.jpg"
+    },
+    {
+      "name": "Драккар",
+      "sex": "male",
+      "photo": "images/puppy1.jpg"
+    },
+    {
+      "name": "Милки",
+      "sex": "male",
+      "photo": "images/puppy2.jpg"
+    },
+    {
       "name": "Сарра",
       "sex": "female",
       "photo": "images/sarra.png"
+    }
+  ],
+  "litters": [
+    {
+      "name": "Помёт 1",
+      "father": "Тарас",
+      "mother": "Аня",
+      "puppies": ["Драккар", "Милки"]
+    },
+    {
+      "name": "Помёт 2",
+      "father": "Тарас",
+      "mother": "Палка",
+      "puppies": ["Сарра"]
     }
   ]
 }
