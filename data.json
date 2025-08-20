@@ -1,0 +1,34 @@
+{
+  "father": {
+    "id": "dog1",
+    "name": "Отец",
+    "sex": "male",
+    "photo": "https://placedog.net/60/60?id=1"
+  },
+  "mother": {
+    "id": "dog2",
+    "name": "Мать",
+    "sex": "female",
+    "photo": "https://placedog.net/60/60?id=2"
+  },
+  "litter": [
+    {
+      "id": "dog3",
+      "name": "Щенок 1",
+      "sex": "male",
+      "photo": "https://placedog.net/60/60?id=3"
+    },
+    {
+      "id": "dog4",
+      "name": "Щенок 2",
+      "sex": "female",
+      "photo": "https://placedog.net/60/60?id=4"
+    },
+    {
+      "id": "dog5",
+      "name": "Щенок 3",
+      "sex": "male",
+      "photo": "https://placedog.net/60/60?id=5"
+    }
+  ]
+}
