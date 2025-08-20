@@ -18,6 +18,33 @@
 <div id="tree"></div>
 
 <script src="https://balkan.app/js/familytree.js"></script>
+  
+<script>
+  fetch('data.json')
+    .then(res => res.json())
+    .then(data => {
+      var family = new FamilyTree(document.getElementById("tree"), {
+        enableSearch: true,
+        mouseScroll: FamilyTree.action.zoom,
+        nodeBinding: {
+          field_0: "name",
+          img_0: "photo"
+        },
+        editForm: {
+          titleBinding: "name",
+          photoBinding: "photo",
+          edit: null,
+          elements: [
+              { type: 'textbox', label: 'Кличка', binding: 'name' },
+              { type: 'textbox', label: 'Паспорт', binding: 'pass-name' },
+          ]
+        },
+        nodes: data
+      });
+    })
+    .catch(err => console.error('Ошибка загрузки data.json:', err));
+</script>
+
 <script>
   var family = new FamilyTree(document.getElementById("tree"), {
     enableSearch: true,
@@ -29,7 +56,7 @@
     editForm: {
         titleBinding: "name",
         photoBinding: "photo",
-        edit: null
+        edit: null,
         elements: [
             { type: 'textbox', label: 'Кличка', binding: 'name' },
             { type: 'textbox', label: 'Паспорт', binding: 'pass-name' },
