@@ -1,8 +1,8 @@
 [
-  { "id": 1, "name": "Тарас", "photo": "images/sarra.png", "pids": [2, 5], "gender": "male" },
-  { "id": 2, "name": "Аня", "photo": "images/sarra.png", "pids": [1], "gender": "female" },
-  { "id": 3, "name": "Драккар", "photo": "images/drakkar.png", "mid": 1, "fid": 2, "gender": "male", "born": "2025-01-03", "pass_name": "Самолла Ритм", "website": "https://vk.com/mudialiexpress" },
-  { "id": 4, "name": "Милки", "photo": "images/sarra.png", "mid": 1, "fid": 2, "gender": "male" },
-  { "id": 5, "name": "Палка", "photo": "images/sarra.png", "pids": [1], "gender": "female" },
-  { "id": 6, "name": "Сарра", "pass_name": "Самолла Сарин", "photo": "images/sarra.png", "mid": 1, "fid": 5, "gender": "female", "born": "2025-03-06" }
+  { "id": 1, "name": "Тарас", "photo": "images/sarra.png", "pids": [2, 5], "gender": "male", "city": "Санкт-Петербург" },
+  { "id": 2, "name": "Аня", "photo": "images/sarra.png", "pids": [1], "gender": "female", "city": "Санкт-Петербург" },
+  { "id": 3, "name": "Драккар", "photo": "images/drakkar.png", "mid": 1, "fid": 2, "gender": "male", "born": "2025-01-03", "pass_name": "Самолла Ритм", "website": "https://vk.com/mudialiexpress", "city": "Москва"},
+  { "id": 4, "name": "Милки", "photo": "images/sarra.png", "mid": 1, "fid": 2, "gender": "male", "city": "Санкт-Петербург" },
+  { "id": 5, "name": "Палка", "photo": "images/sarra.png", "pids": [1], "gender": "female", "city": "Санкт-Петербург" },
+  { "id": 6, "name": "Сарра", "pass_name": "Самолла Сарин", "photo": "images/sarra.png", "mid": 1, "fid": 5, "gender": "female", "born": "2025-03-06", "city": "Москва" }
 ]
