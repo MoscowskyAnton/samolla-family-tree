@@ -3,117 +3,78 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Генеалогическое древо собак</title>
+<title>Генеалогическое древо собак с внешним JSON</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-  .tree {
-    position: relative;
-    margin: 20px;
-  }
-  .parent {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-bottom: 20px;
-  }
+  body { font-family: Arial, sans-serif; }
+  .tree { position: relative; margin: 20px; }
+  .parent { display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; }
   .dog {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: #f0f0f0;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    text-align: center;
-    padding-top: 10px;
-    position: relative;
-    font-size: 14px;
+    width: 100px; height: 100px; border-radius: 50%; background: #f0f0f0;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1); text-align: center; padding-top: 10px;
+    position: relative; font-size: 14px;
   }
   .dog img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 5px;
+    width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 5px;
   }
-  .male {
-    border: 3px solid #3399ff;
-  }
-  .female {
-    border: 3px solid #ff6699;
-  }
+  .male { border: 3px solid #3399ff; }
+  .female { border: 3px solid #ff6699; }
   .litter {
-    border-radius: 15px;
-    border: 2px solid #999;
-    padding: 10px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    width: max-content;
-    margin: 0 auto;
+    border-radius: 15px; border: 2px solid #999; padding: 10px;
+    display: flex; gap: 20px; justify-content: center; width: max-content; margin: 0 auto;
   }
   svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; pointer-events: none;
   }
 </style>
 </head>
 <body>
-
 <div class="tree" id="tree-container">
-  <div class="parent" id="parents">
-    <div class="dog male" id="father">
-      <img src="https://placedog.net/60/60?id=1" alt="Отец" />
-      <div>Отец</div>
-      <div>м</div>
-    </div>
-    <div class="dog female" id="mother">
-      <img src="https://placedog.net/60/60?id=2" alt="Мать" />
-      <div>Мать</div>
-      <div>ж</div>
-    </div>
-  </div>
-  <div class="litter" id="litter">
-    <div class="dog male">
-      <img src="https://placedog.net/60/60?id=3" alt="Щенок 1" />
-      <div>Щенок 1</div>
-      <div>м</div>
-    </div>
-    <div class="dog female">
-      <img src="https://placedog.net/60/60?id=4" alt="Щенок 2" />
-      <div>Щенок 2</div>
-      <div>ж</div>
-    </div>
-    <div class="dog male">
-      <img src="https://placedog.net/60/60?id=5" alt="Щенок 3" />
-      <div>Щенок 3</div>
-      <div>м</div>
-    </div>
-  </div>
   <svg id="arrows"></svg>
 </div>
-
 <script>
-  function drawArrows() {
+  function createDogNode(dog) {
+    const dogDiv = document.createElement('div');
+    dogDiv.classList.add('dog', dog.sex === 'male' ? 'male' : 'female');
+    dogDiv.id = dog.id;
+    dogDiv.innerHTML = `<img src="${dog.photo}" alt="${dog.name}"><div>${dog.name}</div><div>${dog.sex === 'male' ? 'м' : 'ж'}</div>`;
+    return dogDiv;
+  }
+
+  function buildTree(data) {
+    const container = document.getElementById('tree-container');
+    container.innerHTML = '<svg id="arrows"></svg>';
+
+    const parentsDiv = document.createElement('div');
+    parentsDiv.classList.add('parent');
+    parentsDiv.appendChild(createDogNode(data.father));
+    parentsDiv.appendChild(createDogNode(data.mother));
+    container.appendChild(parentsDiv);
+
+    const litterDiv = document.createElement('div');
+    litterDiv.classList.add('litter');
+    litterDiv.id = 'litter';
+    data.litter.forEach(p => litterDiv.appendChild(createDogNode(p)));
+    container.appendChild(litterDiv);
+
+    drawArrows(data);
+  }
+
+  function drawArrows(data) {
     const svg = document.getElementById('arrows');
     const tree = document.getElementById('tree-container');
-    svg.innerHTML = ''; // очистка перед рисованием
+    svg.innerHTML = '';
     svg.style.width = tree.offsetWidth + 'px';
     svg.style.height = tree.offsetHeight + 'px';
 
-    const father = document.getElementById('father');
-    const mother = document.getElementById('mother');
+    const father = document.getElementById(data.father.id);
+    const mother = document.getElementById(data.mother.id);
     const litter = document.getElementById('litter');
 
-    // Получаем координаты центров кружков родителей
+    const containerRect = tree.getBoundingClientRect();
+
     const fatherRect = father.getBoundingClientRect();
     const motherRect = mother.getBoundingClientRect();
     const litterRect = litter.getBoundingClientRect();
-
-    // Координаты относительно контейнера
-    const containerRect = tree.getBoundingClientRect();
 
     const fatherX = fatherRect.left + fatherRect.width / 2 - containerRect.left;
     const fatherY = fatherRect.bottom - containerRect.top;
@@ -124,22 +85,17 @@
     const litterX = litterRect.left + litterRect.width / 2 - containerRect.left;
     const litterY = litterRect.top - containerRect.top;
 
-    // Функция для создания стрелки
-    function createArrow(x1, y1, x2, y2) {
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute('x1', x1);
-      line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2);
-      line.setAttribute('y2', y2);
-      line.setAttribute('stroke', '#444');
-      line.setAttribute('stroke-width', '2');
+    const createArrow = (x1, y1, x2, y2) => {
+      let line = document.createElementNS("http://www.w3.org/2000/svg","line");
+      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+      line.setAttribute('stroke', '#444'); line.setAttribute('stroke-width', '2');
       line.setAttribute('marker-end', 'url(#arrowhead)');
       return line;
-    }
+    };
 
-    // Определяем маркер стрелки
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+    let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    let marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
     marker.setAttribute('id', 'arrowhead');
     marker.setAttribute('markerWidth', '10');
     marker.setAttribute('markerHeight', '7');
@@ -147,21 +103,30 @@
     marker.setAttribute('refY', '3.5');
     marker.setAttribute('orient', 'auto');
 
-    const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
     polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
     polygon.setAttribute('fill', '#444');
     marker.appendChild(polygon);
     defs.appendChild(marker);
     svg.appendChild(defs);
 
-    // Добавляем линии-стрелки
     svg.appendChild(createArrow(fatherX, fatherY, litterX, litterY));
     svg.appendChild(createArrow(motherX, motherY, litterX, litterY));
   }
 
-  window.addEventListener('resize', drawArrows);
-  window.addEventListener('load', drawArrows);
-</script>
+  window.addEventListener('resize', () => {
+    if(window.currentData) {
+      drawArrows(window.currentData);
+    }
+  });
 
+  fetch('data.json')
+    .then(resp => resp.json())
+    .then(data => {
+      window.currentData = data;
+      buildTree(data);
+    })
+    .catch(console.error);
+</script>
 </body>
 </html>
