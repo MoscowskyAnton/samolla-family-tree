@@ -32,13 +32,25 @@
   <svg id="arrows"></svg>
 </div>
 <script>
+
   function createDogNode(dog) {
     const dogDiv = document.createElement('div');
-    dogDiv.classList.add('dog', dog.sex === 'male' ? 'male' : 'female');
+    dogDiv.classList.add('dog');
+    dogDiv.classList.add(dog.sex === 'male' ? 'male' : 'female');
     dogDiv.id = dog.id;
-    dogDiv.innerHTML = `<img src="${dog.photo}" alt="${dog.name}"><div>${dog.name}</div><div>${dog.sex === 'male' ? 'м' : 'ж'}</div>`;
+  
+    const img = document.createElement('img');
+    img.src = dog.photo;
+    img.alt = dog.name;
+  
+    const nameDiv = document.createElement('div');
+    nameDiv.textContent = dog.name;
+  
+    dogDiv.appendChild(img);
+    dogDiv.appendChild(nameDiv);
+  
     return dogDiv;
-  }
+}
 
   function buildTree(data) {
     const container = document.getElementById('tree-container');
