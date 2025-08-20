@@ -64,6 +64,13 @@
         },
         nodes: data
       });
+
+      family.expand(); // раскрыть все узлы
+
+      family.on('collapse', function(sender, args) {
+        args.cancel = true; // запретить сворачивание
+      });
+      
       /*
       family.on('expcollclick', function (sender, isCollapsing, nodeId) {
         var node = family.getNode(nodeId);
