@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Генеалогическое древо собак с одной колонкой разбивкой по годам</title>
+<title>Генеалогическое древо собак с одной колонкой и стрелками</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -116,7 +116,6 @@
     return dayStr + monthStr + dog.year;
   }
 
-  // Возвращает числовой ключ для сортировки дат рождения собак
   function dateToComparable(dog) {
     const y = dog.year || 9999;
     const m = dog.month || 12;
@@ -147,7 +146,6 @@
     return dogDiv;
   }
 
-  // Фильтрация собак без помётов и собаки, которые есть в помётах (чтобы не дублировать)
   function dogsNotInLitters(dogs, litters) {
     const puppiesInLitters = new Set();
     litters.forEach(l => {
@@ -156,11 +154,9 @@
     return dogs.filter(dog => !puppiesInLitters.has(dog.name));
   }
 
-  // Группируем собак и помёты по году (для помётов - берем год из щенков, он должен быть одинаков)
   function groupByYear(dogs, litters) {
     const groups = {};
 
-    // Добавляем собак без помётов
     const dogsAlone = dogsNotInLitters(dogs, litters);
     dogsAlone.forEach(d => {
       if (!d.year) return;
@@ -168,7 +164,6 @@
       groups[d.year].dogs.push(d);
     });
 
-    // Добавляем помёты, определяя год по первому щенку (все щенки одного года!)
     litters.forEach(litter => {
       if (!litter.puppies || litter.puppies.length === 0) return;
       const puppy = dogs.find(d => d.name === litter.puppies[0]);
@@ -178,10 +173,9 @@
       groups[y].litters.push(litter);
     });
 
-    // Сортируем собаки по дате внутри года
+    // сортируем как и раньше
     Object.values(groups).forEach(group => {
       group.dogs.sort((a, b) => dateToComparable(a) - dateToComparable(b));
-      // сортируем щенков внутри помётов по дате
       group.litters.forEach(lit => {
         lit.puppies.sort((a, b) => {
           const da = dogs.find(d => d.name === a);
@@ -189,7 +183,6 @@
           return dateToComparable(da) - dateToComparable(db);
         });
       });
-      // сортируем помёты по дате щенков
       group.litters.sort((a, b) => {
         const da = dogs.find(d => d.name === a.puppies[0]);
         const db = dogs.find(d => d.name === b.puppies[0]);
@@ -237,22 +230,18 @@
       yearGroup.classList.add('year-group');
       yearGroup.style.borderColor = color;
 
-      // Год
       const yearLabel = document.createElement('div');
       yearLabel.classList.add('year-label');
       yearLabel.textContent = year;
       yearGroup.appendChild(yearLabel);
 
-      // Горизонтальный ряд - собаки и помёты
       const row = document.createElement('div');
       row.classList.add('items-row');
 
-      // Добавляем собак
       groups[year].dogs.forEach(dog => {
         row.appendChild(createDogNode(dog));
       });
 
-      // Добавляем помёты
       groups[year].litters.forEach(litter => {
         row.appendChild(createLitterBlock(litter, data.dogs));
       });
@@ -260,16 +249,14 @@
       yearGroup.appendChild(row);
       container.appendChild(yearGroup);
     });
-    
-    setTimeout(() => drawArrows(data), 80);
+
+    setTimeout(() => drawArrows(data), 60);
   }
 
-  // Получить DOM собаки по имени из всего дерева
   function getDogElementByName(name) {
     return document.querySelector(`.dog[data-name="${name}"]`);
   }
 
-  // Получить DOM блока помёта по имени
   function getLitterElementByName(name) {
     return document.querySelector(`.litter-container[data-litter-name="${name}"]`);
   }
@@ -293,7 +280,6 @@
     svg.style.width = container.offsetWidth + "px";
     svg.style.height = container.offsetHeight + "px";
 
-    // Маркер стрелок
     const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
     const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
     marker.setAttribute("id", "arrowhead");
@@ -311,19 +297,25 @@
 
     const containerRect = container.getBoundingClientRect();
 
-    data.litters.forEach(litter => {
-      const litterEl = getLitterElementByName(litter.name);
-      if (!litterEl) return;
+    data.litters.forEach((litter, idx) => {
+      const litterNameForFind = litter.name || `Помёт ${idx + 1}`;
+      const litterEl = getLitterElementByName(litterNameForFind);
+      if (!litterEl) {
+        console.warn(`Помёт не найден: ${litterNameForFind}`);
+        return;
+      }
       const litterRect = litterEl.getBoundingClientRect();
 
       ['father', 'mother'].forEach(parentType => {
         const parentName = litter[parentType];
         if (!parentName) return;
         const parentEl = getDogElementByName(parentName);
-        if (!parentEl) return;
+        if (!parentEl) {
+          console.warn(`Родитель не найден: ${parentName}`);
+          return;
+        }
         const parentRect = parentEl.getBoundingClientRect();
 
-        // Координаты линий - снизу круга родителя к верху помёта
         const x1 = parentRect.left + parentRect.width / 2 - containerRect.left;
         const y1 = parentRect.top + parentRect.height - containerRect.top;
 
@@ -336,10 +328,10 @@
   }
 
   window.addEventListener('resize', () => {
-  if (window.currentData) {
-    setTimeout(() => drawArrows(window.currentData), 80);
-  }
-});
+    if(window.currentData){
+      drawArrows(window.currentData);
+    }
+  });
 
   fetch('data.json')
     .then(r => r.json())
