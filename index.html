@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Пример FamilyTreeJS на GitHub Pages</title>
+  <title>Пример FamilyTreeJS с zoom</title>
   <link href="https://balkan.app/css/familytree.css" rel="stylesheet" />
   <style>
     #tree {
@@ -19,10 +19,9 @@
 
 <script src="https://balkan.app/js/familytree.js"></script>
 <script>
-  // Пример данных узлов: id, имя, и связи через pids (родители)
   var family = new FamilyTree(document.getElementById("tree"), {
     enableSearch: true,
-    mouseScrool: FamilyTree.mouseScroll.zoom,
+    mouseScroll: FamilyTree.action.zoom,  // Правильное имя свойства и значение
     nodeBinding: {
       field_0: "name",
       img_0: "photo"
@@ -30,10 +29,10 @@
     nodes: [
       { id: 1, name: "Отец 1", photo: "images/father1.jpg" },
       { id: 2, name: "Мать 1", photo: "images/mother1.jpg" },
-      { id: 3, name: "Щенок 1-1", photo: "images/puppy1.jpg", pids: [1,2] },
-      { id: 4, name: "Щенок 1-2", photo: "images/puppy2.jpg", pids: [1,2] },
+      { id: 3, name: "Щенок 1-1", photo: "images/puppy1.jpg", pids: [1, 2] },
+      { id: 4, name: "Щенок 1-2", photo: "images/puppy2.jpg", pids: [1, 2] },
       { id: 5, name: "Отец 2", photo: "images/father2.jpg" },
-      { id: 6, name: "Щенок 2-1", photo: "images/puppy3.jpg", pids: [5,2] }
+      { id: 6, name: "Щенок 2-1", photo: "images/puppy3.jpg", pids: [5, 2] }
     ]
   });
 </script>
