@@ -1,24 +1,8 @@
-{
-  "dogs": [
-    {"name": "Отец 1", "sex": "male", "photo": "images/father1.jpg", "day": 15, "month":3, "year":2015},
-    {"name": "Мать 1", "sex": "female", "photo": "images/mother1.jpg", "month":8, "year":2016},
-    {"name": "Отец 2", "sex": "male", "photo": "images/father2.jpg", "year":2014},
-    {"name": "Щенок 1-1", "sex": "male", "photo": "images/puppy1.jpg", "day":5, "month":5, "year":2020},
-    {"name": "Щенок 1-2", "sex": "female", "photo": "images/puppy2.jpg", "month":9, "year":2020},
-    {"name": "Щенок 2-1", "sex": "female", "photo": "images/puppy3.jpg", "year":2021}
-  ],
-  "litters": [
-    {
-      "name": "Помёт 1",
-      "father": "Отец 1",
-      "mother": "Мать 1",
-      "puppies": ["Щенок 1-1", "Щенок 1-2"]
-    },
-    {
-      "name": "Помёт 2",
-      "father": "Отец 2",
-      "mother": "Мать 1",
-      "puppies": ["Щенок 2-1"]
-    }
-  ]
-}
+[
+  { id: 1, name: "Тарас", photo: "images/sarra.png", pids: [2, 5], gender: "male" },
+  { id: 2, name: "Аня", photo: "images/sarra.png", pids: [1], gender: "female" },
+  { id: 3, name: "Драккар", photo: "images/sarra.png", mid: 1, fid: 2, gender: "male" },
+  { id: 4, name: "Милки", photo: "images/sarra.png", mid: 1, fid: 2, gender: "male" },
+  { id: 5, name: "Палка", photo: "images/sarra.png", pids: [1], gender: "female" },
+  { id: 6, name: "Сарра", pass-name: "Самолла Сарин", photo: "images/sarra.png", mid: 1, fid: 5, gender: "female" }
+]
