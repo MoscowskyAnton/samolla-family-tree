@@ -336,10 +336,10 @@
   }
 
   window.addEventListener('resize', () => {
-    if(window.currentData){
-      drawArrows(window.currentData);
-    }
-  });
+  if (window.currentData) {
+    setTimeout(() => drawArrows(window.currentData), 80);
+  }
+});
 
   fetch('data.json')
     .then(r => r.json())
