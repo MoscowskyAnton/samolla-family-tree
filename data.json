@@ -1,7 +1,7 @@
 [
   { "id": 1, "name": "Тарас", "photo": "images/sarra.png", "pids": [2, 5], "gender": "male" },
   { "id": 2, "name": "Аня", "photo": "images/sarra.png", "pids": [1], "gender": "female" },
-  { "id": 3, "name": "Драккар", "photo": "images/sarra.png", "mid": 1, "fid": 2, "gender": "male" },
+  { "id": 3, "name": "Драккар", "photo": "images/drakkar.png", "mid": 1, "fid": 2, "gender": "male" },
   { "id": 4, "name": "Милки", "photo": "images/sarra.png", "mid": 1, "fid": 2, "gender": "male" },
   { "id": 5, "name": "Палка", "photo": "images/sarra.png", "pids": [1], "gender": "female" },
   { "id": 6, "name": "Сарра", "pass_name": "Самолла Сарин", "photo": "images/sarra.png", "mid": 1, "fid": 5, "gender": "female", "born": "2025-03-06" }
