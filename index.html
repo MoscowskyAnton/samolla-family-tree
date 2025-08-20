@@ -1,144 +1,65 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Генеалогическое древо собак с внешним JSON</title>
-<style>
-  body { font-family: Arial, sans-serif; }
-  .tree { position: relative; margin: 20px; }
-  .parent { display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; }
-  .dog {
-    width: 100px; height: 100px; border-radius: 50%; background: #f0f0f0;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1); text-align: center; padding-top: 10px;
-    position: relative; font-size: 14px;
-  }
-  .dog img {
-    width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 5px;
-  }
-  .male { border: 3px solid #3399ff; }
-  .female { border: 3px solid #ff6699; }
-  .litter {
-    border-radius: 15px; border: 2px solid #999; padding: 10px;
-    display: flex; gap: 20px; justify-content: center; width: max-content; margin: 0 auto;
-  }
-  svg {
-    position: absolute; top: 0; left: 0; pointer-events: none;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Пример FamilyTreeJS с zoom</title>
+  <link href="https://balkan.app/css/familytree.css" rel="stylesheet" />
+  <style>
+    #tree {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #ccc;
+    }
+    .ft-edit-photo img {
+      width: 100% !important;
+      height: auto !important;
+      object-fit: contain !important;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-<div class="tree" id="tree-container">
-  <svg id="arrows"></svg>
-</div>
+
+<div id="tree"></div>
+
+<script src="https://balkan.app/js/familytree.js"></script>
+  
 <script>
-
-  function createDogNode(dog) {
-    const dogDiv = document.createElement('div');
-    dogDiv.classList.add('dog');
-    dogDiv.classList.add(dog.sex === 'male' ? 'male' : 'female');
-    dogDiv.id = dog.id;
-  
-    const img = document.createElement('img');
-    img.src = dog.photo;
-    img.alt = dog.name;
-  
-    const nameDiv = document.createElement('div');
-    nameDiv.textContent = dog.name;
-  
-    dogDiv.appendChild(img);
-    dogDiv.appendChild(nameDiv);
-  
-    return dogDiv;
-}
-
-  function buildTree(data) {
-    const container = document.getElementById('tree-container');
-    container.innerHTML = '<svg id="arrows"></svg>';
-
-    const parentsDiv = document.createElement('div');
-    parentsDiv.classList.add('parent');
-    parentsDiv.appendChild(createDogNode(data.father));
-    parentsDiv.appendChild(createDogNode(data.mother));
-    container.appendChild(parentsDiv);
-
-    const litterDiv = document.createElement('div');
-    litterDiv.classList.add('litter');
-    litterDiv.id = 'litter';
-    data.litter.forEach(p => litterDiv.appendChild(createDogNode(p)));
-    container.appendChild(litterDiv);
-
-    drawArrows(data);
-  }
-
-  function drawArrows(data) {
-    const svg = document.getElementById('arrows');
-    const tree = document.getElementById('tree-container');
-    svg.innerHTML = '';
-    svg.style.width = tree.offsetWidth + 'px';
-    svg.style.height = tree.offsetHeight + 'px';
-
-    const father = document.getElementById(data.father.id);
-    const mother = document.getElementById(data.mother.id);
-    const litter = document.getElementById('litter');
-
-    const containerRect = tree.getBoundingClientRect();
-
-    const fatherRect = father.getBoundingClientRect();
-    const motherRect = mother.getBoundingClientRect();
-    const litterRect = litter.getBoundingClientRect();
-
-    const fatherX = fatherRect.left + fatherRect.width / 2 - containerRect.left;
-    const fatherY = fatherRect.bottom - containerRect.top;
-
-    const motherX = motherRect.left + motherRect.width / 2 - containerRect.left;
-    const motherY = motherRect.bottom - containerRect.top;
-
-    const litterX = litterRect.left + litterRect.width / 2 - containerRect.left;
-    const litterY = litterRect.top - containerRect.top;
-
-    const createArrow = (x1, y1, x2, y2) => {
-      let line = document.createElementNS("http://www.w3.org/2000/svg","line");
-      line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-      line.setAttribute('x2', x2); line.setAttribute('y2', y2);
-      line.setAttribute('stroke', '#444'); line.setAttribute('stroke-width', '2');
-      line.setAttribute('marker-end', 'url(#arrowhead)');
-      return line;
-    };
-
-    let defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    let marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-    marker.setAttribute('id', 'arrowhead');
-    marker.setAttribute('markerWidth', '10');
-    marker.setAttribute('markerHeight', '7');
-    marker.setAttribute('refX', '0');
-    marker.setAttribute('refY', '3.5');
-    marker.setAttribute('orient', 'auto');
-
-    let polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
-    polygon.setAttribute('fill', '#444');
-    marker.appendChild(polygon);
-    defs.appendChild(marker);
-    svg.appendChild(defs);
-
-    svg.appendChild(createArrow(fatherX, fatherY, litterX, litterY));
-    svg.appendChild(createArrow(motherX, motherY, litterX, litterY));
-  }
-
-  window.addEventListener('resize', () => {
-    if(window.currentData) {
-      drawArrows(window.currentData);
-    }
-  });
-
   fetch('data.json')
-    .then(resp => resp.json())
+    .then(res => res.json())
     .then(data => {
-      window.currentData = data;
-      buildTree(data);
+      var family = new FamilyTree(document.getElementById("tree"), {
+        enableSearch: true,
+        mouseScroll: FamilyTree.action.zoom,
+        template: 'hugo',        
+        showYScroll: FamilyTree.scroll.visible,
+        showXScroll: FamilyTree.scroll.visible,
+        nodeBinding: {
+          field_0: "name",
+          img_0: "photo"
+        },
+        editForm: {
+          titleBinding: "name",
+          photoBinding: "photo",
+          generateElementsFromFields: false,
+          buttons: {
+            edit: null,
+            share: null,
+            pdf: null,
+          },       
+          elements: [
+              { type: 'textbox', label: 'Кличка', binding: 'name' },
+              { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
+              { type: 'date', label: 'Date Of Birth', binding: 'born' },
+          ]
+        },
+        nodes: data
+      });
     })
-    .catch(console.error);
+    .catch(err => console.error('Ошибка загрузки data.json:', err));
 </script>
+
+
 </body>
 </html>
