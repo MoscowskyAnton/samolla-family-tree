@@ -26,6 +26,7 @@
       var family = new FamilyTree(document.getElementById("tree"), {
         enableSearch: true,
         enableUpTreeExpand: false,
+        scaleInitial: FamilyTree.match.boundary,
         mouseScroll: FamilyTree.action.zoom,
         template: 'hugo',        
         showYScroll: FamilyTree.scroll.visible,
