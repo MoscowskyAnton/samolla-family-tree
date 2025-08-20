@@ -5,5 +5,7 @@
   { "id": 4, "name": "Милки", "photo": "images/sarra.png", "mid": 1, "fid": 2, "gender": "male", "city": "Санкт-Петербург" },
   { "id": 5, "name": "Палка", "photo": "images/sarra.png", "pids": [1], "gender": "female", "city": "Санкт-Петербург" },
   { "id": 6, "name": "Сарра", "pass_name": "Самолла Сарин", "photo": "images/sarra.png", "mid": 1, "fid": 5, "gender": "female", "born": "2025-03-06", "city": "Москва" },
-  // { "id" : , "name": "", "pass_name": "photo": }
+  { "id" 7: , "name": "Орион", "pids": [8] },
+  { "id" 8: , "name": "Нюша", "pids": [7] },
+  { "id" 9: , "name": "Лори", "mid": 7, "fid": 8, "photo": "images/lori.png", "born": "2022-11-26" },
 ]
