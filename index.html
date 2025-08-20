@@ -194,32 +194,51 @@
 
   // Создаёт блоки собак сгруппированных по годам с цветным фоном
   function renderDogsList(dogs) {
-    const dogsList = document.getElementById('dogs-list');
-    dogsList.innerHTML = '';
-    const {groups, sortedYears} = groupDogsByYear(dogs);
+  const dogsList = document.getElementById('dogs-list');
+  dogsList.innerHTML = '';
 
-    sortedYears.forEach((year, i) => {
-      const color = yearColors[i % yearColors.length];
-      const yearBlock = document.createElement('div');
-      yearBlock.classList.add('year-group');
-      yearBlock.style.borderColor = color;
-
-      const label = document.createElement('div');
-      label.classList.add('year-label');
-      label.textContent = year;
-      yearBlock.appendChild(label);
-
-      const dogsOfYear = document.createElement('div');
-      dogsOfYear.classList.add('dogs-of-year');
-
-      groups[year].forEach(dog => {
-        dogsOfYear.appendChild(createDogNode(dog));
-      });
-
-      yearBlock.appendChild(dogsOfYear);
-      dogsList.appendChild(yearBlock);
-    });
+  if (!dogs || dogs.length === 0) {
+    dogsList.textContent = 'Список собак пуст.';
+    return;
   }
+
+  // Группируем собак по году с упрощенной логикой
+  const groups = {};
+  dogs.forEach(dog => {
+    if (!dog.year) dog.year = 'Без года';
+    if (!groups[dog.year]) groups[dog.year] = [];
+    groups[dog.year].push(dog);
+  });
+
+  const sortedYears = Object.keys(groups).sort((a,b) => {
+    if (a === 'Без года') return 1;
+    if (b === 'Без года') return -1;
+    return parseInt(a) - parseInt(b);
+  });
+
+  sortedYears.forEach((year, i) => {
+    const color = yearColors[i % yearColors.length];
+    const yearBlock = document.createElement('div');
+    yearBlock.classList.add('year-group');
+    yearBlock.style.borderColor = color;
+
+    const label = document.createElement('div');
+    label.classList.add('year-label');
+    label.textContent = year;
+    yearBlock.appendChild(label);
+
+    const dogsOfYear = document.createElement('div');
+    dogsOfYear.classList.add('dogs-of-year');
+
+    groups[year].forEach(dog => {
+      dogsOfYear.appendChild(createDogNode(dog));
+    });
+
+    yearBlock.appendChild(dogsOfYear);
+    dogsList.appendChild(yearBlock);
+  });
+}
+
 
   // Находит DOM-блок собаки в списке собак
   function getDogElementByName(name) {
@@ -353,6 +372,8 @@
   // Основная функция построения дерева из JSON
   function buildTree(data) {
     renderDogsList(data.dogs);
+    console.log('Список собак отрисован', dogs);
+
     renderLitters(data);
     // Делаем отрисовку стрелок через небольшой таймаут, чтобы DOM успел отрендериться
     setTimeout(() => drawArrows(data), 50);
