@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Пример FamilyTreeJS с zoom</title>
+  <title>Samolla Team Family Tree</title>
   <link href="https://balkan.app/css/familytree.css" rel="stylesheet" />
   <style>
     #tree {
@@ -25,6 +25,7 @@
     .then(data => {
       var family = new FamilyTree(document.getElementById("tree"), {
         enableSearch: true,
+        enableUpTreeExpand: false,
         mouseScroll: FamilyTree.action.zoom,
         template: 'hugo',        
         showYScroll: FamilyTree.scroll.visible,
@@ -46,6 +47,7 @@
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
               { type: 'date', label: 'Date Of Birth', binding: 'born' },
+            /*
               {
                 type: 'link', // тип ссылки
                 label: 'Сайт',
@@ -55,11 +57,31 @@
                 },
                 target: '_blank' // открывать в новой вкладке
               },
+              */
               { type: 'textbox', label: 'Город', binding: 'city' },
           ]
         },
         nodes: data
       });
+      /*
+      family.on('expcollclick', function (sender, isCollapsing, nodeId) {
+        var node = family.getNode(nodeId);
+        if (isCollapsing) {
+          family.expandCollapse(nodeId, [], node.ftChildrenIds)
+        }
+        else {
+          family.expandCollapse(nodeId, node.ftChildrenIds, [])
+        }
+        return false;
+      });
+
+      family.on('render-link', function (sender, args) {
+        if (args.cnode.ppid != undefined)
+          args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xa) + '" y="' + (args.p.ya) + '"/>';
+        if (args.cnode.isPartner && args.node.partnerSeparation == 30)
+          args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
+      });
+      */
     })
     .catch(err => console.error('Ошибка загрузки data.json:', err));
 </script>
