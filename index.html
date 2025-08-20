@@ -3,18 +3,42 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Генеалогическое древо собак — с общим списком собак</title>
+<title>Генеалогическое древо собак с датами и группировкой по годам</title>
 <style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  .tree { position: relative; max-width: 1000px; margin: auto; }
+  body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background: #fafafa;
+  }
+  .tree {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+  }
   #dogs-list {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: 300px;
+  }
+  .year-group {
+    border-left: 5px solid;
+    padding-left: 10px;
+    margin-bottom: 40px;
+  }
+  .year-label {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .dogs-of-year {
+    display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 50px;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 20px;
+    gap: 15px;
   }
   .dog {
     width: 100px;
@@ -23,11 +47,12 @@
     background: #f0f0f0;
     box-shadow: 0 0 8px rgba(0,0,0,0.1);
     text-align: center;
-    padding-top: 10px;
     font-size: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 10px;
+    position: relative;
   }
   .dog img {
     width: 60px;
@@ -35,14 +60,23 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 5px;
+    user-select: none;
   }
   .male { border: 3px solid #3399ff; }
   .female { border: 3px solid #ff6699; }
-
+  .birthday {
+    font-size: 11px;
+    color: #555;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+  }
   #litters-list {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 60px;
+    position: relative;
   }
   .litter-block {
     position: relative;
@@ -51,6 +85,7 @@
   .litter-name {
     font-weight: bold;
     margin-bottom: 10px;
+    font-size: 16px;
   }
   .litter {
     border-radius: 15px;
@@ -58,18 +93,19 @@
     padding: 10px;
     display: flex;
     gap: 20px;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     width: max-content;
+    background: #fff;
   }
-  /* svg для стрелок */
   svg#arrows-svg {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     pointer-events: none;
     overflow: visible;
+    width: 100%;
+    height: 100%;
   }
 </style>
 </head>
@@ -82,157 +118,254 @@
 </div>
 
 <script>
-// Создаём DOM элемент собаки
-function createDogNode(dog) {
-  const dogDiv = document.createElement('div');
-  dogDiv.classList.add('dog');
-  dogDiv.classList.add(dog.sex === 'male' ? 'male' : 'female');
-  dogDiv.dataset.name = dog.name; // Атрибут для поиска по имени
+  // Цвета для выделения по годам
+  const yearColors = [
+    '#d0f0c0', '#f0d0c0', '#c0d0f0', '#f0f0c0', '#d0c0f0'
+  ];
 
-  const img = document.createElement('img');
-  img.src = dog.photo;
-  img.alt = dog.name;
-
-  const nameDiv = document.createElement('div');
-  nameDiv.textContent = dog.name;
-
-  dogDiv.appendChild(img);
-  dogDiv.appendChild(nameDiv);
-  return dogDiv;
-}
-
-// Построение дерева
-function buildTree(data) {
-  const dogsList = document.getElementById('dogs-list');
-  const littersList = document.getElementById('litters-list');
-
-  dogsList.innerHTML = '';
-  littersList.innerHTML = '';
-
-  // Отрисовываем всех собак один раз
-  data.dogs.forEach(dog => {
-    dogsList.appendChild(createDogNode(dog));
-  });
-
-  // Отрисовываем помёты с щенками
-  data.litters.forEach((litter, idx) => {
-    const litterBlock = document.createElement('div');
-    litterBlock.classList.add('litter-block');
-    litterBlock.dataset.litterIndex = idx; // для идентификации
-
-    const litterName = document.createElement('div');
-    litterName.classList.add('litter-name');
-    litterName.textContent = litter.name || `Помёт ${idx + 1}`;
-    litterBlock.appendChild(litterName);
-
-    const puppiesDiv = document.createElement('div');
-    puppiesDiv.classList.add('litter');
-
-    litter.puppies.forEach(puppyName => {
-      const puppy = findDogByName(data.dogs, puppyName);
-      if (puppy) {
-        puppiesDiv.appendChild(createDogNode(puppy));
-      }
-    });
-
-    litterBlock.appendChild(puppiesDiv);
-    littersList.appendChild(litterBlock);
-  });
-
-  // Делаем отрисовку стрелок с задержкой, чтобы DOM обновился
-  setTimeout(() => drawAllArrows(data), 50);
-}
-
-// Поиск собаки по уникальному имени
-function findDogByName(dogs, name) {
-  return dogs.find(d => d.name === name) || null;
-}
-
-// Создание стрелки SVG
-function createArrow(x1, y1, x2, y2) {
-  const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-  line.setAttribute('x1', x1);
-  line.setAttribute('y1', y1);
-  line.setAttribute('x2', x2);
-  line.setAttribute('y2', y2);
-  line.setAttribute('stroke', '#444');
-  line.setAttribute('stroke-width', '2');
-  line.setAttribute('marker-end', 'url(#arrowhead)');
-  return line;
-}
-
-// Отрисовываем все стрелки от собак к помётам
-function drawAllArrows(data) {
-  const svg = document.getElementById('arrows-svg');
-  const tree = document.getElementById('tree-container');
-  svg.innerHTML = '';
-  svg.style.width = tree.offsetWidth + 'px';
-  svg.style.height = tree.offsetHeight + 'px';
-
-  // Добавляем маркер стрелки
-  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-  const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-  marker.setAttribute('id', 'arrowhead');
-  marker.setAttribute('markerWidth', '10');
-  marker.setAttribute('markerHeight', '7');
-  marker.setAttribute('refX', '0');
-  marker.setAttribute('refY', '3.5');
-  marker.setAttribute('orient', 'auto');
-  const polygon = document.createElementNS("http://www.w3.org/2000/svg","polygon");
-  polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
-  polygon.setAttribute('fill', '#444');
-  marker.appendChild(polygon);
-  defs.appendChild(marker);
-  svg.appendChild(defs);
-
-  const containerRect = tree.getBoundingClientRect();
-
-  data.litters.forEach((litter, idx) => {
-    const litterBlock = document.querySelector(`.litter-block[data-litter-index="${idx}"]`);
-    if (!litterBlock) return;
-
-    const puppiesDiv = litterBlock.querySelector('.litter');
-    if (!puppiesDiv) return;
-
-    const puppiesRect = puppiesDiv.getBoundingClientRect();
-
-    ['father', 'mother'].forEach(parentType => {
-      const parentName = litter[parentType];
-      if (!parentName) return;
-
-      const parentNode = document.querySelector(`#dogs-list .dog[data-name="${parentName}"]`);
-      if(!parentNode) return;
-
-      const parentRect = parentNode.getBoundingClientRect();
-
-      // Координаты для линии: от центра родителя к центру помёта (щенков)
-      const x1 = parentRect.left + parentRect.width / 2 - containerRect.left;
-      const y1 = parentRect.top + parentRect.height - containerRect.top; // низ кружка родителя
-      const x2 = puppiesRect.left + puppiesRect.width / 2 - containerRect.left;
-      const y2 = puppiesRect.top - containerRect.top; // верх помёта
-
-      svg.appendChild(createArrow(x1, y1, x2, y2));
-    });
-  });
-}
-
-// При изменении размера окна пересчитываем стрелки
-window.addEventListener('resize', () => {
-  if(window.currentData){
-    drawAllArrows(window.currentData);
+  // Формат даты: день (опционально) месяц год (числа) - для отображения
+  function formatDate(dog) {
+    let d = dog.day ? dog.day + '.' : '';
+    d += (dog.month ? dog.month : '') + '.' + dog.year;
+    return d;
   }
-});
 
-// Пример загрузки из JSON - data.json должен находиться в репозитории вместе с этим index.html
-fetch('data.json')
-  .then(res => res.json())
-  .then(data => {
-    window.currentData = data;
-    buildTree(data);
-  })
-  .catch(err => {
-    console.error('Ошибка загрузки данных:', err);
+  // Парсим дату для сортировки: чем меньше, тем "раньше"
+  // Должен работать на неполных датах (отсутст день или месяц)
+  function dateToComparable(dog) {
+    // Если нет года, ставим большой год для сортировки в конец
+    const year = dog.year || 9999;
+    // Если нет месяца, ставим 12
+    const month = dog.month || 12;
+    // Если нет дня, ставим 31
+    const day = dog.day || 31;
+
+    // Создаем число: ггггммдд для сравнения
+    return year*10000 + month*100 + day;
+  }
+
+  // Создаём DOM элемент собаки
+  function createDogNode(dog) {
+    const dogDiv = document.createElement('div');
+    dogDiv.classList.add('dog');
+    dogDiv.classList.add(dog.sex === 'male' ? 'male' : 'female');
+    dogDiv.dataset.name = dog.name; // для поиска при рисовании стрелок
+
+    const img = document.createElement('img');
+    img.src = dog.photo;
+    img.alt = dog.name;
+
+    const nameDiv = document.createElement('div');
+    nameDiv.textContent = dog.name;
+
+    const birthdayDiv = document.createElement('div');
+    birthdayDiv.classList.add('birthday');
+    birthdayDiv.textContent = formatDate(dog);
+
+    dogDiv.appendChild(img);
+    dogDiv.appendChild(nameDiv);
+    dogDiv.appendChild(birthdayDiv);
+
+    return dogDiv;
+  }
+
+  // Сгруппировать собак по году рождения, отсортировать по месяцу/дню внутри года
+  function groupDogsByYear(dogs) {
+    const groups = {};
+
+    dogs.forEach(dog => {
+      if (!dog.year) return; // игнорируем без года
+      if (!groups[dog.year]) groups[dog.year] = [];
+      groups[dog.year].push(dog);
+    });
+
+    // Сортируем собак внутри группы
+    Object.keys(groups).forEach(year => {
+      groups[year].sort((a,b) => {
+        return dateToComparable(a) - dateToComparable(b);
+      });
+    });
+
+    // Сортируем ключи годов по возрастанию
+    const sortedYears = Object.keys(groups).map(y=>parseInt(y)).sort((a,b)=>a-b);
+
+    return {groups, sortedYears};
+  }
+
+  // Создаёт блоки собак сгруппированных по годам с цветным фоном
+  function renderDogsList(dogs) {
+    const dogsList = document.getElementById('dogs-list');
+    dogsList.innerHTML = '';
+    const {groups, sortedYears} = groupDogsByYear(dogs);
+
+    sortedYears.forEach((year, i) => {
+      const color = yearColors[i % yearColors.length];
+      const yearBlock = document.createElement('div');
+      yearBlock.classList.add('year-group');
+      yearBlock.style.borderColor = color;
+
+      const label = document.createElement('div');
+      label.classList.add('year-label');
+      label.textContent = year;
+      yearBlock.appendChild(label);
+
+      const dogsOfYear = document.createElement('div');
+      dogsOfYear.classList.add('dogs-of-year');
+
+      groups[year].forEach(dog => {
+        dogsOfYear.appendChild(createDogNode(dog));
+      });
+
+      yearBlock.appendChild(dogsOfYear);
+      dogsList.appendChild(yearBlock);
+    });
+  }
+
+  // Находит DOM-блок собаки в списке собак
+  function getDogElementByName(name) {
+    return document.querySelector(`#dogs-list .dog[data-name="${name}"]`);
+  }
+
+  // Создаём элемент щенка (сделаем просто кружки без дат уже) 
+  function createPuppyElement(dog) {
+    const puppyDiv = document.createElement('div');
+    puppyDiv.classList.add('dog');
+    puppyDiv.classList.add(dog.sex === 'male' ? 'male' : 'female');
+    puppyDiv.style.width = '80px';
+    puppyDiv.style.height = '80px';
+    puppyDiv.style.fontSize = '12px';
+
+    const img = document.createElement('img');
+    img.src = dog.photo;
+    img.alt = dog.name;
+
+    const nameDiv = document.createElement('div');
+    nameDiv.textContent = dog.name;
+
+    puppyDiv.appendChild(img);
+    puppyDiv.appendChild(nameDiv);
+    return puppyDiv;
+  }
+
+  // Рендерим помёты с щенками
+  function renderLitters(data) {
+    const littersList = document.getElementById('litters-list');
+    littersList.innerHTML = '';
+
+    data.litters.forEach((litter, idx) => {
+      const litterBlock = document.createElement('div');
+      litterBlock.classList.add('litter-block');
+      litterBlock.dataset.litterIndex = idx;
+
+      const litterName = document.createElement('div');
+      litterName.classList.add('litter-name');
+      litterName.textContent = litter.name || `Помёт ${idx + 1}`;
+
+      const puppiesDiv = document.createElement('div');
+      puppiesDiv.classList.add('litter');
+
+      litter.puppies.forEach(puppyName => {
+        const puppy = data.dogs.find(dog => dog.name === puppyName);
+        if (puppy) {
+          puppiesDiv.appendChild(createPuppyElement(puppy));
+        }
+      });
+
+      litterBlock.appendChild(litterName);
+      litterBlock.appendChild(puppiesDiv);
+      littersList.appendChild(litterBlock);
+    });
+  }
+
+  // Создаем стрелку SVG
+  function createArrow(x1, y1, x2, y2) {
+    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1", x1);
+    line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2);
+    line.setAttribute("y2", y2);
+    line.setAttribute("stroke", "#444");
+    line.setAttribute("stroke-width", "2");
+    line.setAttribute("marker-end", "url(#arrowhead)");
+    return line;
+  }
+
+  // Рисуем стрелки от собак (родителей) к помётам
+  function drawArrows(data) {
+    const svg = document.getElementById("arrows-svg");
+    const tree = document.getElementById("tree-container");
+    svg.innerHTML = "";
+    svg.style.width = tree.offsetWidth + "px";
+    svg.style.height = tree.offsetHeight + "px";
+
+    // Добавим описания маркера стрелки
+    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+    marker.setAttribute("id", "arrowhead");
+    marker.setAttribute("markerWidth", "10");
+    marker.setAttribute("markerHeight", "7");
+    marker.setAttribute("refX", "0");
+    marker.setAttribute("refY", "3.5");
+    marker.setAttribute("orient", "auto");
+    const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+    polygon.setAttribute("points", "0 0, 10 3.5, 0 7");
+    polygon.setAttribute("fill", "#444");
+    marker.appendChild(polygon);
+    defs.appendChild(marker);
+    svg.appendChild(defs);
+
+    const containerRect = tree.getBoundingClientRect();
+
+    data.litters.forEach((litter, idx) => {
+      const litterBlock = document.querySelector(`.litter-block[data-litter-index="${idx}"]`);
+      if (!litterBlock) return;
+
+      const puppiesDiv = litterBlock.querySelector(".litter");
+      if (!puppiesDiv) return;
+      const puppiesRect = puppiesDiv.getBoundingClientRect();
+
+      ["father", "mother"].forEach(parentType => {
+        const parentName = litter[parentType];
+        if (!parentName) return;
+
+        const parentNode = getDogElementByName(parentName);
+        if (!parentNode) return;
+        const parentRect = parentNode.getBoundingClientRect();
+
+        const x1 = parentRect.left + parentRect.width / 2 - containerRect.left;
+        const y1 = parentRect.top + parentRect.height - containerRect.top;
+
+        const x2 = puppiesRect.left + puppiesRect.width / 2 - containerRect.left;
+        const y2 = puppiesRect.top - containerRect.top;
+
+        svg.appendChild(createArrow(x1, y1, x2, y2));
+      });
+    });
+  }
+
+  // Перестраиваем стрелки при изменении размера окна
+  window.addEventListener("resize", () => {
+    if (window.currentData) {
+      drawArrows(window.currentData);
+    }
   });
+
+  // Основная функция построения дерева из JSON
+  function buildTree(data) {
+    renderDogsList(data.dogs);
+    renderLitters(data);
+    // Делаем отрисовку стрелок через небольшой таймаут, чтобы DOM успел отрендериться
+    setTimeout(() => drawArrows(data), 50);
+  }
+
+  // Загружаем JSON из репозитория (data.json)
+  fetch("data.json")
+    .then(response => response.json())
+    .then(data => {
+      window.currentData = data; // сохраняем для ресайза
+      buildTree(data);
+    })
+    .catch(error => console.error("Ошибка при загрузке JSON:", error));
 </script>
 
 </body>
