@@ -268,33 +268,44 @@
 
   // Рендерим помёты с щенками
   function renderLitters(data) {
-    const littersList = document.getElementById('litters-list');
-    littersList.innerHTML = '';
+  const littersList = document.getElementById('litters-list');
+  littersList.innerHTML = '';
 
-    data.litters.forEach((litter, idx) => {
-      const litterBlock = document.createElement('div');
-      litterBlock.classList.add('litter-block');
-      litterBlock.dataset.litterIndex = idx;
-
-      const litterName = document.createElement('div');
-      litterName.classList.add('litter-name');
-      litterName.textContent = litter.name || `Помёт ${idx + 1}`;
-
-      const puppiesDiv = document.createElement('div');
-      puppiesDiv.classList.add('litter');
-
-      litter.puppies.forEach(puppyName => {
-        const puppy = data.dogs.find(dog => dog.name === puppyName);
-        if (puppy) {
-          puppiesDiv.appendChild(createPuppyElement(puppy));
-        }
-      });
-
-      litterBlock.appendChild(litterName);
-      litterBlock.appendChild(puppiesDiv);
-      littersList.appendChild(litterBlock);
-    });
+  if (!data.litters || data.litters.length === 0) {
+    littersList.textContent = 'Помёты отсутствуют.';
+    console.warn('В data.litters нет элементов или он пуст');
+    return;
   }
+
+  data.litters.forEach((litter, idx) => {
+    console.log('Рендерим помёт:', litter.name || `Помёт ${idx+1}`);
+
+    const litterBlock = document.createElement('div');
+    litterBlock.classList.add('litter-block');
+    litterBlock.dataset.litterIndex = idx;
+
+    const litterName = document.createElement('div');
+    litterName.classList.add('litter-name');
+    litterName.textContent = litter.name || `Помёт ${idx + 1}`;
+
+    const puppiesDiv = document.createElement('div');
+    puppiesDiv.classList.add('litter');
+
+    litter.puppies.forEach(puppyName => {
+      const puppy = data.dogs.find(dog => dog.name === puppyName);
+      if (puppy) {
+        puppiesDiv.appendChild(createPuppyElement(puppy));
+      } else {
+        console.warn('Щенок не найден в списке собак:', puppyName);
+      }
+    });
+
+    litterBlock.appendChild(litterName);
+    litterBlock.appendChild(puppiesDiv);
+    littersList.appendChild(litterBlock);
+  });
+}
+
 
   // Создаем стрелку SVG
   function createArrow(x1, y1, x2, y2) {
