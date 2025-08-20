@@ -21,13 +21,13 @@
     {
       "id": "dog4",
       "name": "Кояш",
-      "sex": "female",
+      "sex": "male",
       "photo": "https://placedog.net/60/60?id=4"
     },
     {
       "id": "dog5",
       "name": "Сарра",
-      "sex": "male",
+      "sex": "female",
       "photo": "images/sarra.png"
     }
   ]
