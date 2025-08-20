@@ -30,6 +30,10 @@
         titleBinding: "name",
         photoBinding: "photo",
         edit: null
+        elements: [
+            { type: 'textbox', label: 'Кличка', binding: 'name' },
+            { type: 'textbox', label: 'Паспорт', binding: 'pass-name' },
+        ]
     },
     nodes: [
       { id: 1, name: "Тарас", photo: "images/sarra.png", pids: [2, 5], gender: "male" },
@@ -37,7 +41,7 @@
       { id: 3, name: "Драккар", photo: "images/sarra.png", mid: 1, fid: 2, gender: "male" },
       { id: 4, name: "Милки", photo: "images/sarra.png", mid: 1, fid: 2, gender: "male" },
       { id: 5, name: "Палка", photo: "images/sarra.png", pids: [1], gender: "female" },
-      { id: 6, name: "Сарра", photo: "images/sarra.png", mid: 1, fid: 5, gender: "female" }
+      { id: 6, name: "Сарра", pass-name: "Самолла Сарин", photo: "images/sarra.png", mid: 1, fid: 5, gender: "female" }
     ]
   });
 </script>
