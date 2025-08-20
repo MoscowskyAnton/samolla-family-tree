@@ -42,7 +42,16 @@
             share: null,
             pdf: null,
           },
-          
+          tags: {
+              "node-with-subtrees": {
+                  min: true,
+                  template: "group",
+                  subTreeConfig: {
+                      siblingSeparation: 3,
+                      columns: 2
+                  }
+              }
+          },          
           elements: [
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
