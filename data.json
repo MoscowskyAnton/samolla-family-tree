@@ -10,5 +10,5 @@
   { "id": 9, "name": "Лори", "mid": 7, "fid": 8, "photo": "images/lori.png", "born": "2022-11-26", "pass_name": "Самолла Лайк", "gender": "male" },
   { "id": 10, "name": "Мага", "pids": [5], "gender": "male" },
   { "id": 11, "name": "Варя", "gender": "female", "fid": 5, "mid": 10, "photo": "images/varya.png", "pass_name": "Самолла Миеликки", "born": "2023-07-11" },
-  { "id": 6, "name": "Аскеладд", "pass_name": "Самолла СерыйУс", "photo": "images/askeladd.png", "mid": 1, "fid": 5, "gender": "male", "born": "2025-03-06", "city": "Москва" }
+  { "id": 12, "name": "Аскеладд", "pass_name": "Самолла СерыйУс", "photo": "images/askeladd.png", "mid": 1, "fid": 5, "gender": "male", "born": "2025-03-06", "city": "Москва" }
 ]
