@@ -3,7 +3,7 @@
   { "id": 2, "name": "Аня", "pids": [1], "gender": "female", "city": "Санкт-Петербург" },
   { "id": 3, "name": "Драккар", "photo": "images/drakkar.png", "fid": 1, "mid": 2, "gender": "male", "born": "2025-01-03", "pass_name": "Самолла Ритм", "website": "https://vk.com/mudialiexpress", "city": "Москва"},
   { "id": 4, "name": "Милки", "fid": 1, "mid": 2, "gender": "male", "city": "Санкт-Петербург" },
-  { "id": 5, "name": "Палка", "pids": [1, 10], "mid": 8, "gender": "female", "city": "Санкт-Петербург" },
+  { "id": 5, "name": "Палка", "pids": [1, 10, 17], "mid": 8, "gender": "female", "city": "Санкт-Петербург" },
   { "id": 6, "name": "Сарра", "pass_name": "Самолла Сарин", "photo": "images/sarra.png", "fid": 1, "mid": 5, "gender": "female", "born": "2025-03-06", "city": "Москва" },
   { "id": 7, "name": "Орион", "pids": [8], "gender": "male" },
   { "id": 8, "name": "Нюша", "pids": [7], "gender": "female" },
