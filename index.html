@@ -69,13 +69,13 @@
         nodes: data
       });
 
-      setTimeout(() => {
-        family.expand();
-      }, 100);
-
       family.on('collapse', function(sender, args) {
         args.cancel = true; // запретить сворачивание
       });
+      
+      setTimeout(() => {
+        family.expand();
+      }, 100);      
       
       /*
       family.on('expcollclick', function (sender, isCollapsing, nodeId) {
