@@ -65,7 +65,9 @@
         nodes: data
       });
 
-      family.expand(); // раскрыть все узлы
+      setTimeout(() => {
+        family.expand();
+      }, 100);
 
       family.on('collapse', function(sender, args) {
         args.cancel = true; // запретить сворачивание
