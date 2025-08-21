@@ -6,9 +6,13 @@
   <title>Samolla Team Family Tree</title>
   <link href="https://balkan.app/css/familytree.css" rel="stylesheet" />
   <style>
+    html, body{
+      width: 100%;
+      height: 100%;
+    }
     #tree {
       width: 100%;
-      height: 600px;
+      height: 100%;
       border: 1px solid #ccc;
     }    
   </style>
@@ -26,8 +30,9 @@
       var family = new FamilyTree(document.getElementById("tree"), {
         enableSearch: true,
         enableUpTreeExpand: false,
+        scaleInitial: FamilyTree.match.boundary,
         mouseScroll: FamilyTree.action.zoom,
-        template: 'hugo',        
+        //template: 'hugo',        
         showYScroll: FamilyTree.scroll.visible,
         showXScroll: FamilyTree.scroll.visible,
         nodeBinding: {
@@ -46,7 +51,7 @@
           elements: [
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
-              { type: 'date', label: 'Date Of Birth', binding: 'born' },
+              { type: 'date', label: 'Дата рождения', binding: 'born' },
             /*
               {
                 type: 'link', // тип ссылки
@@ -63,6 +68,15 @@
         },
         nodes: data
       });
+
+      family.on('collapse', function(sender, args) {
+        args.cancel = true; // запретить сворачивание
+      });
+      
+      setTimeout(() => {
+        family.expand();
+      }, 100);      
+      
       /*
       family.on('expcollclick', function (sender, isCollapsing, nodeId) {
         var node = family.getNode(nodeId);
