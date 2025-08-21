@@ -102,6 +102,7 @@
         nodes: data
       });
 
+      /*
       family.on('collapse', function(sender, args) {
         args.cancel = true; // запретить сворачивание
       });
@@ -109,7 +110,7 @@
       setTimeout(() => {
         family.expand();
       }, 100);
-
+      */
       family.on('field', function (sender, args) {
         if (args.node.min) {
             if (args.name == "name") {
