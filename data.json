@@ -16,5 +16,5 @@
   { "id": 15, "name": "Юмана", "gender": "female", "mid": 5, "fid": 10, "photo": "images/ymana.png", "pass_name": "Самолла Миля Лунного света", "born": "2023-07-11" },
   { "id": 16, "name": "Ивари", "gender": "female", "mid": 5, "fid": 17, "photo": "images/ivari.png", "pass_name": "Самолла Инари", "born": "2020-09-18" },
   { "id": 17, "name": "Бенич", "pids": [5], "gender": "male" },
-  { "id": 18, "name": "Сим", "gender": "male", "mid": 5, "fid": 17, "photo": "images/ivari.png", "pass_name": "Самолла Инари", "born": "2020-09-18" }
+  { "id": 18, "name": "Сим", "gender": "male", "mid": 5, "fid": 17, "photo": "images/inmar.png", "pass_name": "Самолла Инмар", "born": "2020-09-18" }
 ]
