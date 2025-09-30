@@ -3,6 +3,8 @@ import re
 from collections import defaultdict, OrderedDict
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
+from datetime import datetime
+
 
 # Конфигурация: замените на ваши путь к credentials json и ID таблицы
 SERVICE_ACCOUNT_FILE = 'samolla-b4398f9d675c.json'
@@ -54,7 +56,7 @@ def build_family_tree(data):
     litters = {}  # litter_key -> {'id': int, 'puppies': list}
     parents_partners = defaultdict(set)
 
-    def get_or_create_id(name):
+    def get_or_create_id(name, gender = None):
         if not name:
             return None
         if name not in name_to_id:
@@ -63,7 +65,7 @@ def build_family_tree(data):
             parent_nodes[new_id] = {
                 'id': new_id,
                 'name': name,
-                'gender': None,
+                'gender': gender,
                 'isParent': True,
                 'pids': set()
             }
@@ -76,8 +78,8 @@ def build_family_tree(data):
 
     # Получить id родителей и записать партнёрства
     for d in unique_data:
-        fid = get_or_create_id(d.get('father'))
-        mid = get_or_create_id(d.get('mother'))
+        fid = get_or_create_id(d.get('father'), 'male')
+        mid = get_or_create_id(d.get('mother'), 'female')
         d['fid'] = fid
         d['mid'] = mid
         if fid and mid:
@@ -165,7 +167,7 @@ def build_family_tree(data):
             'id': name_to_id[d['name']],
             'name': d['name'],
             'gender': gender,
-            'birthdate': d.get('birthdate'),
+            'birthdate': datetime.strptime(d.get('birthdate'), "%m/%d/%Y").strftime("%Y-%m-%d"),
             'pass_name': d.get('pass_name'),
             'stpid': d.get('stpid'),
             'fid': None,
@@ -173,7 +175,7 @@ def build_family_tree(data):
         }
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'pass_name', 'stpid', 'fid', 'mid', 'Timestamp', 'url_photo'} and k not in IGNORE_FIELDS:
+            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'Timestamp', 'url_photo'} and k not in IGNORE_FIELDS:
                 if v is not None:
                     node[k] = v
         nodes.append(node)

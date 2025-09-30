@@ -2,7 +2,7 @@
   {
     "id": 2,
     "name": "Тарас",
-    "gender": null,
+    "gender": "male",
     "pids": [
       3
     ],
@@ -11,7 +11,7 @@
   {
     "id": 3,
     "name": "Палка",
-    "gender": null,
+    "gender": "female",
     "pids": [
       2
     ],
@@ -32,7 +32,7 @@
     "id": 1,
     "name": "Аскеладд",
     "gender": "male",
-    "birthdate": "3/6/2025",
+    "birthdate": "2025-03-06",
     "pass_name": "Самолла Сириус",
     "stpid": 4,
     "fid": null,
