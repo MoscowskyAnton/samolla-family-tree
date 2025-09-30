@@ -1,0 +1,44 @@
+[
+  {
+    "id": 2,
+    "name": "Тарас",
+    "gender": null,
+    "pids": [
+      3
+    ],
+    "isParent": true
+  },
+  {
+    "id": 3,
+    "name": "Палка",
+    "gender": null,
+    "pids": [
+      2
+    ],
+    "isParent": true
+  },
+  {
+    "id": 4,
+    "name": "Помёт С",
+    "fid": 2,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Аскеладд",
+    "gender": "male",
+    "born": "3/6/2025",
+    "pass_name": "Самолла Сириус",
+    "stpid": 4,
+    "fid": null,
+    "mid": null,
+    "cuty": "Москва",
+    "web": "",
+    "master_note": "Пока что он просто крокодилище"
+  }
+]

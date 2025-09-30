@@ -24,7 +24,7 @@
 <script src="https://balkan.app/js/familytree.js"></script>
 
 <script>
-  fetch('data.json')
+  fetch('family_tree.json')
     .then(res => res.json())
     .then(data => {
       var family = new FamilyTree(document.getElementById("tree"), {
@@ -52,7 +52,9 @@
           elements: [
               { type: 'textbox', label: 'Кличка', binding: 'name' },
               { type: 'textbox', label: 'Паспорт', binding: 'pass_name' },
-              { type: 'date', label: 'Дата рождения', binding: 'born' },
+              { type: 'date', label: 'Дата рождения', binding: 'birthdate' },
+			  { type: 'textbox', label: 'Отец', binding: 'father' },
+			  { type: 'textbox', label: 'Мать', binding: 'mother' },
             /*
               {
                 type: 'link', // тип ссылки
@@ -98,7 +100,7 @@
       });
       */
     })
-    .catch(err => console.error('Ошибка загрузки data.json:', err));
+    .catch(err => console.error('Ошибка загрузки family_tree.json:', err));
 </script>
 
 
