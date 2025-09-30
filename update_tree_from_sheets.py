@@ -219,10 +219,11 @@ def build_family_tree(data):
             'stpid': d.get('stpid'),
             'fid': None,
             'mid': None,
+            'web': d.get('web').replace(' ', '\n')
         }
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo'}:
+            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo', 'isParent'}:
                 if v is not None:
                     node[k] = v
         nodes.append(node)
