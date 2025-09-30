@@ -32,12 +32,14 @@
     "id": 1,
     "name": "Аскеладд",
     "gender": "male",
-    "born": "3/6/2025",
+    "birthdate": "3/6/2025",
     "pass_name": "Самолла Сириус",
     "stpid": 4,
     "fid": null,
     "mid": null,
-    "cuty": "Москва",
+    "father": "Тарас",
+    "mother": "Палка",
+    "city": "Москва",
     "web": "",
     "master_note": "Пока что он просто крокодилище"
   }

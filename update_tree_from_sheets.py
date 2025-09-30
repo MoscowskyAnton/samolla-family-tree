@@ -165,7 +165,7 @@ def build_family_tree(data):
             'id': name_to_id[d['name']],
             'name': d['name'],
             'gender': gender,
-            'born': d.get('birthdate'),
+            'birthdate': d.get('birthdate'),
             'pass_name': d.get('pass_name'),
             'stpid': d.get('stpid'),
             'fid': None,
@@ -173,7 +173,7 @@ def build_family_tree(data):
         }
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'birthdate', 'father', 'mother', 'pass_name', 'stpid', 'fid', 'mid', 'Timestamp', 'url_photo'} and k not in IGNORE_FIELDS:
+            if k not in {'name', 'gender', 'pass_name', 'stpid', 'fid', 'mid', 'Timestamp', 'url_photo'} and k not in IGNORE_FIELDS:
                 if v is not None:
                     node[k] = v
         nodes.append(node)
