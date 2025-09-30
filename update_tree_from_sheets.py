@@ -4,7 +4,46 @@ from collections import defaultdict, OrderedDict
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from datetime import datetime
+import re
+from googleapiclient.http import MediaIoBaseDownload
+import io
+import os
 
+def extract_drive_file_id(url):
+    """
+    Извлекает ID файла из ссылки Google Drive.
+    Поддерживает форматы:
+    - https://drive.google.com/open?id=FILE_ID
+    - https://drive.google.com/file/d/FILE_ID/view
+    - https://docs.google.com/document/d/FILE_ID/edit
+    """
+    # Проверяем параметр id= в URL
+    match = re.search(r'id=([a-zA-Z0-9_-]+)', url)
+    if match:
+        return match.group(1)
+    # Проверяем формат /d/FILE_ID/
+    match = re.search(r'/d/([a-zA-Z0-9_-]+)', url)
+    if match:
+        return match.group(1)
+    return None
+
+
+
+def rus_to_translit(text):
+    # Словарь для замены русских букв на транслит
+    translit_dict = {
+        'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'E', 'Ж': 'Zh',
+        'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O',
+        'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts',
+        'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Yu',
+        'Я': 'Ya',
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'e', 'ж': 'zh',
+        'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o',
+        'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts',
+        'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu',
+        'я': 'ya'
+    }
+    return ''.join(translit_dict.get(c, c) for c in text)
 
 # Конфигурация: замените на ваши путь к credentials json и ID таблицы
 SERVICE_ACCOUNT_FILE = 'samolla-b4398f9d675c.json'
@@ -34,6 +73,13 @@ def load_google_sheet():
         data.append(obj)
     return data
 
+def load_drive():
+
+    # Создаем credentials и сервис
+    credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=['https://www.googleapis.com/auth/drive.readonly'])
+    service = build('drive', 'v3', credentials=credentials)
+    return service
+
 class IdGenerator:
     def __init__(self):
         self.current_id = 1
@@ -43,6 +89,8 @@ class IdGenerator:
         return id_
 
 def build_family_tree(data):
+    drive_srv = load_drive()
+    
     id_gen = IdGenerator()
     name_to_data = OrderedDict()
 
@@ -149,8 +197,7 @@ def build_family_tree(data):
         }
         nodes.append(litter_node)
 
-    # Добавить щенков, конвертируя gender, исключая игнорируемые поля
-    IGNORE_FIELDS = {'timestamp', 'url_photo'}
+    # Добавить щенков, конвертируя gender, исключая игнорируемые поля    
 
     for d in unique_data:
         gender = d.get('gender')
@@ -175,10 +222,37 @@ def build_family_tree(data):
         }
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'Timestamp', 'url_photo'} and k not in IGNORE_FIELDS:
+            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo'}:
                 if v is not None:
                     node[k] = v
         nodes.append(node)
+        
+        url_photo = d.get('url_photo')
+        if url_photo:
+            photo_id = extract_drive_file_id(url_photo)
+            if photo_id:                
+                
+                dog_name_translit = 'dog_photos/' + rus_to_translit(node['name']) + "_" + d.get('timestamp').replace('/', '_').replace(' ', '_').replace(":", '_')+ '.jpg'
+                
+                if not os.path.exists(dog_name_translit):
+                
+                    request = drive_srv.files().get_media(fileId=photo_id)
+                    
+                    fh = io.FileIO(f'{dog_name_translit}', 'wb')
+    
+                    downloader = MediaIoBaseDownload(fh, request)
+                    done = False
+    
+                    while not done:
+                        status, done = downloader.next_chunk()
+                        print(f"Загрузка {dog_name_translit} {int(status.progress() * 100)}%")
+                    fh.close()
+                else:
+                    print(f'Skip {dog_name_translit}')
+                    
+                node['photo'] = dog_name_translit
+            
+                
 
     return nodes
 
