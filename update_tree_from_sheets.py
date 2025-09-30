@@ -165,6 +165,7 @@ def build_family_tree(data):
     # Добавить помёты с именем из pass_name и тегом
     for litter_key, litter_data in litters.items():
         puppies = litter_data['puppies']
+        #if len(puppies) > 1:
         litter_char = None
         # Определяем первую букву второго слова pass_name любого щенка из помёта
         for pup in puppies:
@@ -196,6 +197,8 @@ def build_family_tree(data):
             'tags': ['node-with-subtrees']
         }
         nodes.append(litter_node)
+        #else:
+            
 
     # Добавить щенков, конвертируя gender, исключая игнорируемые поля    
 
@@ -231,19 +234,14 @@ def build_family_tree(data):
         url_photo = d.get('url_photo')
         if url_photo:
             photo_id = extract_drive_file_id(url_photo)
-            if photo_id:                
-                
+            if photo_id:                                
                 dog_name_translit = 'dog_photos/' + rus_to_translit(node['name']) + "_" + d.get('timestamp').replace('/', '_').replace(' ', '_').replace(":", '_')+ '.jpg'
                 
-                if not os.path.exists(dog_name_translit):
-                
-                    request = drive_srv.files().get_media(fileId=photo_id)
-                    
-                    fh = io.FileIO(f'{dog_name_translit}', 'wb')
-    
+                if not os.path.exists(dog_name_translit):                
+                    request = drive_srv.files().get_media(fileId=photo_id)                    
+                    fh = io.FileIO(f'{dog_name_translit}', 'wb')    
                     downloader = MediaIoBaseDownload(fh, request)
-                    done = False
-    
+                    done = False    
                     while not done:
                         status, done = downloader.next_chunk()
                         print(f"Загрузка {dog_name_translit} {int(status.progress() * 100)}%")
@@ -251,9 +249,7 @@ def build_family_tree(data):
                 else:
                     print(f'Skip {dog_name_translit}')
                     
-                node['photo'] = dog_name_translit
-            
-                
+                node['photo'] = dog_name_translit                
 
     return nodes
 
