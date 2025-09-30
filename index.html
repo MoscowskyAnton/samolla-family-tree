@@ -24,13 +24,38 @@
 <script src="https://balkan.app/js/familytree.js"></script>
 
 <script>
+
   fetch('family_tree.json')
+
     .then(res => res.json())
     .then(data => {
+
+    FamilyTree.templates.group = Object.assign({}, FamilyTree.templates.tommy);
+    FamilyTree.templates.group.size = [250, 120];
+    FamilyTree.templates.group.node = 
+        '<rect rx="20" ry="20" x="0" y="0" height="{h}" width="{w}" fill="#D25FD2" stroke-width="3" stroke="#aeaeae"></rect>';
+    FamilyTree.templates.group.nodeMenuButton = "";
+    FamilyTree.templates.group.field_0 = 
+        '<text data-width="220" style="font-size: 18px;" fill="white" x="{cw}" y="30" text-anchor="middle">'
+        + '{val}</text>';
+    FamilyTree.templates.group.field_1 = '';
+    
+    FamilyTree.templates.group.ripple = {
+        radius: 50,
+        color: "#aeaeae"
+    };
+    
+    FamilyTree.templates.group.min = Object.assign({}, FamilyTree.templates.group);
+    FamilyTree.templates.group.min.img_0 = "";
+    FamilyTree.templates.group.min.field_0 = '{val}',
+    //FamilyTree.templates.group.min.field_0 = '<text data-width="220" style="font-size: 18px;" fill="white" x="{cw}" y="30" text-anchor="middle">' + '{val}</text>';
+    FamilyTree.templates.group.min.field_1 = "";
+      
+      
       var family = new FamilyTree(document.getElementById("tree"), {
         enableSearch: true,
         //enableUpTreeExpand: false,
-        scaleInitial: FamilyTree.match.boundary,
+        //scaleInitial: FamilyTree.match.boundary,
         mouseScroll: FamilyTree.action.zoom,
         orientation: FamilyTree.orientation.left_top,
         template: 'hugo',
@@ -39,6 +64,16 @@
         nodeBinding: {
           field_0: "name",
           img_0: "photo"
+        },
+        tags: {
+            "node-with-subtrees": {
+                min: true,
+                template: "group",
+                subTreeConfig: {
+                    siblingSeparation: 3,
+                    columns: 2
+                }
+            }
         },
         editForm: {
           titleBinding: "name",
@@ -72,6 +107,7 @@
         nodes: data
       });
 
+      /*
       family.on('collapse', function(sender, args) {
         args.cancel = true; // запретить сворачивание
       });
@@ -79,26 +115,40 @@
       setTimeout(() => {
         family.expand();
       }, 100);
-
-      /*
-      family.on('expcollclick', function (sender, isCollapsing, nodeId) {
-        var node = family.getNode(nodeId);
-        if (isCollapsing) {
-          family.expandCollapse(nodeId, [], node.ftChildrenIds)
-        }
-        else {
-          family.expandCollapse(nodeId, node.ftChildrenIds, [])
-        }
-        return false;
-      });
-
-      family.on('render-link', function (sender, args) {
-        if (args.cnode.ppid != undefined)
-          args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xa) + '" y="' + (args.p.ya) + '"/>';
-        if (args.cnode.isPartner && args.node.partnerSeparation == 30)
-          args.html += '<use data-ctrl-ec-id="' + args.node.id + '" xlink:href="#heart" x="' + (args.p.xb) + '" y="' + (args.p.yb) + '"/>';
-      });
       */
+      family.on('field', function (sender, args) {
+        if (args.node.min) {
+            if (args.name == "name") {
+                var count = args.node.stChildrenIds.length > 5 ? 5 : args.node.stChildrenIds.length;
+                var x = args.node.w / 2 - (count * 64) / 2;
+                args.value = "";
+                for (var i = 0; i < count; i++) {
+                    var data = sender.get(args.node.stChildrenIds[i]);
+                    var color = '#00A7D4' // 'rgb(3, 155, 229)'
+                    if (data.gender == 'female'){
+                        color = '#FF46A3' // 'rgb(245, 124, 0)'
+                    }                    
+                    args.value += 
+                        '<rect x="' + (x + i * 64) + '" y="55" width="64" height="32" fill="'+color+'" rx="5" ry="5"></rect>'
+                        + '<text x="' + (x + i * 64 + 32)  + '" y="75" fill="#fff" text-anchor="middle">'+data.name+'</text>';                                    
+                }
+            }
+        }
+    });
+    
+    family.on('click', function (sender, args) {
+        if (args.node.templateName == "group") {
+            if (args.node.min ) {
+                sender.maximize(args.node.id);
+            }
+            else {
+                sender.minimize(args.node.id);
+            }
+            return false;
+        } 
+    });
+
+      
     })
     .catch(err => console.error('Ошибка загрузки family_tree.json:', err));
 </script>
