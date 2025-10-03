@@ -1,7 +1,7 @@
 [
   {
     "id": 6,
-    "name": "Тарас",
+    "name": "Мага",
     "gender": "male",
     "pids": [
       7
@@ -13,14 +13,32 @@
     "name": "Палка",
     "gender": "female",
     "pids": [
-      8,
+      10,
       6
     ],
     "isParent": true
   },
   {
     "id": 8,
-    "name": "Мага",
+    "name": "Рубик",
+    "gender": "male",
+    "pids": [
+      9
+    ],
+    "isParent": true
+  },
+  {
+    "id": 9,
+    "name": "Нюша",
+    "gender": "female",
+    "pids": [
+      8
+    ],
+    "isParent": true
+  },
+  {
+    "id": 10,
+    "name": "Тарас",
     "gender": "male",
     "pids": [
       7
@@ -28,26 +46,8 @@
     "isParent": true
   },
   {
-    "id": 9,
-    "name": "Рубик",
-    "gender": "male",
-    "pids": [
-      10
-    ],
-    "isParent": true
-  },
-  {
-    "id": 10,
-    "name": "Нюша",
-    "gender": "female",
-    "pids": [
-      9
-    ],
-    "isParent": true
-  },
-  {
     "id": 11,
-    "name": "Помёт С",
+    "name": "Помёт П",
     "fid": 6,
     "mid": 7,
     "gender": null,
@@ -58,9 +58,9 @@
   },
   {
     "id": 12,
-    "name": "Помёт М",
+    "name": "Помёт К",
     "fid": 8,
-    "mid": 7,
+    "mid": 9,
     "gender": null,
     "isLitter": true,
     "tags": [
@@ -69,8 +69,8 @@
   },
   {
     "id": 13,
-    "name": "Помёт П",
-    "fid": 8,
+    "name": "Помёт М",
+    "fid": 6,
     "mid": 7,
     "gender": null,
     "isLitter": true,
@@ -80,9 +80,9 @@
   },
   {
     "id": 14,
-    "name": "Помёт К",
-    "fid": 9,
-    "mid": 10,
+    "name": "Помёт С",
+    "fid": 10,
+    "mid": 7,
     "gender": null,
     "isLitter": true,
     "tags": [
@@ -91,34 +91,33 @@
   },
   {
     "id": 1,
-    "name": "Аскеладд",
+    "name": "Райдо",
     "gender": "male",
-    "birthdate": "2025-03-06",
-    "pass_name": "Самолла Сириус",
+    "birthdate": "2024-08-10",
+    "pass_name": "Самолла Пряник",
     "stpid": 11,
-    "fid": null,
-    "mid": null,
-    "father": "Тарас",
-    "mother": "Палка",
-    "city": "Москва",
-    "web": "",
-    "master_note": "Пока что он просто крокодилище",
-    "photo": "dog_photos/Askeladd_8_27_2025_17_01_44.jpg"
-  },
-  {
-    "id": 2,
-    "name": "Варенька",
-    "gender": "female",
-    "birthdate": "2023-07-11",
-    "pass_name": "Самолла Миеликки",
-    "stpid": 12,
     "fid": null,
     "mid": null,
     "father": "Мага",
     "mother": "Палка",
-    "city": "Санкт-Петербург",
-    "web": "https://t.me/damekko_petshop",
-    "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
+    "city": "Санкт-Петербург ",
+    "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Сейви",
+    "gender": "female",
+    "birthdate": "2021-02-11",
+    "pass_name": "Самолла Ксена",
+    "stpid": 12,
+    "fid": null,
+    "mid": null,
+    "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
+    "father": "Рубик",
+    "mother": "Нюша",
+    "city": "Екатеринбург",
+    "master_note": "Маленький ураган летящий за тарелками  :)",
+    "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
   },
   {
     "id": 3,
@@ -126,44 +125,45 @@
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пиратка",
-    "stpid": 13,
+    "stpid": 11,
     "fid": null,
     "mid": null,
+    "web": "",
     "father": "Мага",
     "mother": "Палка",
     "city": "Санкт-Петербург",
-    "web": "",
     "master_note": "Стремительная, умная, выносливая, громкая",
     "photo": "dog_photos/Dina_9_30_2025_20_24_46.jpg"
   },
   {
     "id": 4,
-    "name": "Сейви",
+    "name": "Варенька",
     "gender": "female",
-    "birthdate": "2021-02-11",
-    "pass_name": "Самолла Ксена",
-    "stpid": 14,
-    "fid": null,
-    "mid": null,
-    "father": "Рубик",
-    "mother": "Нюша",
-    "city": "Екатеринбург",
-    "web": "https://vk.com/tw0_geese https://t.me/toothy_goose",
-    "master_note": "Маленький ураган летящий за тарелками  :)",
-    "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
-  },
-  {
-    "id": 5,
-    "name": "Райдо",
-    "gender": "male",
-    "birthdate": "2024-08-10",
-    "pass_name": "Самолла Пряник",
+    "birthdate": "2023-07-11",
+    "pass_name": "Самолла Миеликки",
     "stpid": 13,
     "fid": null,
     "mid": null,
+    "web": "https://t.me/damekko_petshop",
     "father": "Мага",
     "mother": "Палка",
-    "city": "Санкт-Петербург ",
-    "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
+    "city": "Санкт-Петербург",
+    "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Аскеладд",
+    "gender": "male",
+    "birthdate": "2025-03-06",
+    "pass_name": "Самолла Сириус",
+    "stpid": 14,
+    "fid": null,
+    "mid": null,
+    "web": "https://vk.com/watson.alba.askeladd",
+    "father": "Тарас",
+    "mother": "Палка",
+    "city": "Москва",
+    "master_note": "Он просто мраморный Бараш",
+    "photo": "dog_photos/Askeladd_10_3_2025_19_48_11.jpg"
   }
 ]

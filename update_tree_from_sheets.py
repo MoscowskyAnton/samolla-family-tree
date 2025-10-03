@@ -95,7 +95,7 @@ def build_family_tree(data):
     name_to_data = OrderedDict()
 
     # Удалить дубликаты по имени, оставляя последнюю встречу
-    for d in reversed(data):
+    for d in data:
         name_to_data[d['name']] = d
     unique_data = list(reversed(list(name_to_data.values())))
 
@@ -222,11 +222,15 @@ def build_family_tree(data):
             'stpid': d.get('stpid'),
             'fid': None,
             'mid': None,            
-        }        
+        }
+        
+        if not d.get('web') is None:            
+            node['web'] = d.get('web').replace(' ', '\n')
+        
         
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo', 'isParent'}:
+            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo', 'isParent', 'web'}:
                 if v is not None:
                     node[k] = v
         nodes.append(node)
