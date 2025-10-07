@@ -57,7 +57,7 @@
   },
   {
     "id": 14,
-    "name": "Помёт !",
+    "name": "Помёт С",
     "fid": 8,
     "mid": 9,
     "gender": null,
@@ -115,7 +115,7 @@
     "name": "Сарра",
     "gender": "female",
     "birthdate": "2025-03-06",
-    "pass_name": "Сарин ",
+    "pass_name": "Самолла Сарин",
     "stpid": 14,
     "fid": null,
     "mid": null,
