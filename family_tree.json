@@ -1,45 +1,7 @@
 [
   {
-    "id": 8,
-    "name": "Тарас",
-    "gender": "male",
-    "pids": [
-      9,
-      10
-    ],
-    "isParent": true
-  },
-  {
-    "id": 9,
-    "name": "Палка",
-    "gender": "female",
-    "pids": [
-      8,
-      11
-    ],
-    "isParent": true
-  },
-  {
-    "id": 10,
-    "name": "Аня",
-    "gender": "female",
-    "pids": [
-      8
-    ],
-    "isParent": true
-  },
-  {
-    "id": 11,
-    "name": "Мага",
-    "gender": "male",
-    "pids": [
-      9
-    ],
-    "isParent": true
-  },
-  {
     "id": 12,
-    "name": "Рубик",
+    "name": "Бойти",
     "gender": "male",
     "pids": [
       13
@@ -48,7 +10,7 @@
   },
   {
     "id": 13,
-    "name": "Нюша",
+    "name": "Кишасонь",
     "gender": "female",
     "pids": [
       12
@@ -57,40 +19,62 @@
   },
   {
     "id": 14,
-    "name": "Помёт С",
-    "fid": 8,
-    "mid": 9,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
+    "name": "Богар",
+    "gender": "male",
+    "pids": [
+      15
+    ],
+    "isParent": true
   },
   {
     "id": 15,
-    "name": "Помёт Р",
-    "fid": 8,
-    "mid": 10,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
+    "name": "Феньеш",
+    "gender": "female",
+    "pids": [
+      14
+    ],
+    "isParent": true
   },
   {
     "id": 16,
-    "name": "Помёт П",
-    "fid": 11,
-    "mid": 9,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
+    "name": "Хуути",
+    "gender": "male",
+    "pids": [
+      2
+    ],
+    "isParent": true
   },
   {
     "id": 17,
-    "name": "Помёт К",
+    "name": "Мага",
+    "gender": "male",
+    "pids": [
+      3
+    ],
+    "isParent": true
+  },
+  {
+    "id": 18,
+    "name": "Тарас",
+    "gender": "male",
+    "pids": [
+      1,
+      3
+    ],
+    "isParent": true
+  },
+  {
+    "id": 19,
+    "name": "Рубик",
+    "gender": "male",
+    "pids": [
+      2
+    ],
+    "isParent": true
+  },
+  {
+    "id": 20,
+    "name": "Помёт A",
     "fid": 12,
     "mid": 13,
     "gender": null,
@@ -100,10 +84,76 @@
     ]
   },
   {
-    "id": 18,
+    "id": 21,
+    "name": "Помёт K",
+    "fid": 14,
+    "mid": 15,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Помёт Г",
+    "fid": 16,
+    "mid": 2,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Помёт П",
+    "fid": 17,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Помёт С",
+    "fid": 18,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Помёт Р",
+    "fid": 18,
+    "mid": 1,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Помёт К",
+    "fid": 19,
+    "mid": 2,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 27,
     "name": "Помёт М",
-    "fid": 11,
-    "mid": 9,
+    "fid": 17,
+    "mid": 3,
     "gender": null,
     "isLitter": true,
     "tags": [
@@ -112,11 +162,65 @@
   },
   {
     "id": 1,
+    "name": "Аня",
+    "gender": "female",
+    "birthdate": "2021-10-24",
+    "pass_name": "Kacifantos Annacska",
+    "stpid": 20,
+    "fid": null,
+    "mid": null,
+    "father": "Бойти",
+    "mother": "Кишасонь",
+    "photo": "dog_photos/Anya_10_14_2025_23_21_06.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Нюша",
+    "gender": "female",
+    "birthdate": "2013-10-30",
+    "pass_name": "Kunok Kincse Nyüszgö",
+    "stpid": 21,
+    "fid": null,
+    "mid": null,
+    "father": "Богар",
+    "mother": "Феньеш",
+    "photo": "dog_photos/Nyusha_10_14_2025_23_18_22.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Палка",
+    "gender": "female",
+    "birthdate": "2018-02-02",
+    "pass_name": "Самолла Гарпалика",
+    "stpid": 22,
+    "fid": null,
+    "mid": null,
+    "father": "Хуути",
+    "mother": "Нюша",
+    "city": "Питер",
+    "photo": "dog_photos/Palka_10_14_2025_23_14_58.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Кукла",
+    "gender": "female",
+    "birthdate": "2024-08-10",
+    "pass_name": "Самолла Паприка",
+    "stpid": 23,
+    "fid": null,
+    "mid": null,
+    "father": "Мага",
+    "mother": "Палка",
+    "city": "Питер",
+    "photo": "dog_photos/Kukla_10_14_2025_23_12_37.jpg"
+  },
+  {
+    "id": 5,
     "name": "Сарра",
     "gender": "female",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сарин",
-    "stpid": 14,
+    "stpid": 24,
     "fid": null,
     "mid": null,
     "web": "",
@@ -127,12 +231,12 @@
     "photo": "dog_photos/Sarra_10_7_2025_13_43_42.jpg"
   },
   {
-    "id": 2,
+    "id": 6,
     "name": "Драккар",
     "gender": "male",
     "birthdate": "2025-01-03",
     "pass_name": "Самолла Ритм",
-    "stpid": 15,
+    "stpid": 25,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/mudialiexpress",
@@ -142,12 +246,12 @@
     "photo": "dog_photos/Drakkar_10_3_2025_20_11_10.jpg"
   },
   {
-    "id": 3,
+    "id": 7,
     "name": "Райдо",
     "gender": "male",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пряник",
-    "stpid": 16,
+    "stpid": 23,
     "fid": null,
     "mid": null,
     "father": "Мага",
@@ -156,12 +260,12 @@
     "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
   },
   {
-    "id": 4,
+    "id": 8,
     "name": "Сейви",
     "gender": "female",
     "birthdate": "2021-02-11",
     "pass_name": "Самолла Ксена",
-    "stpid": 17,
+    "stpid": 26,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
@@ -172,12 +276,12 @@
     "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
   },
   {
-    "id": 5,
+    "id": 9,
     "name": "Дина",
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пиратка",
-    "stpid": 16,
+    "stpid": 23,
     "fid": null,
     "mid": null,
     "web": "",
@@ -188,12 +292,12 @@
     "photo": "dog_photos/Dina_9_30_2025_20_24_46.jpg"
   },
   {
-    "id": 6,
+    "id": 10,
     "name": "Варенька",
     "gender": "female",
     "birthdate": "2023-07-11",
     "pass_name": "Самолла Миеликки",
-    "stpid": 18,
+    "stpid": 27,
     "fid": null,
     "mid": null,
     "web": "https://t.me/damekko_petshop",
@@ -203,12 +307,12 @@
     "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
   },
   {
-    "id": 7,
+    "id": 11,
     "name": "Аскеладд",
     "gender": "male",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сириус",
-    "stpid": 14,
+    "stpid": 24,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/watson.alba.askeladd",
