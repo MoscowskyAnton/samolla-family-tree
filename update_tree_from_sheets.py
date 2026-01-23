@@ -236,6 +236,8 @@ def build_family_tree(data):
             'stpid': d.get('stpid'),
             #'fid': d['fid'],
             #'mid': d['mid'],          
+            'fid': None,
+            'mid': None,          
         }
         
         if id in parents_partners:
