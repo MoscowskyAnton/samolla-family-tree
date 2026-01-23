@@ -129,11 +129,11 @@ def build_family_tree(data):
         d['stpid'] = litters[litter_key]['id']
         d['litter_key'] = litter_key
 
-    # Фильтрация помётов: только без потомков у щенков
+    # Фильтрация помётов: только без потомков у щенков и больше одного щенка
     filtered_litters = {}
     for litter_key, litter_data in litters.items():
         puppies = litter_data['puppies']
-        if all(name_to_id[pup['name']] not in has_descendants for pup in puppies):
+        if all(name_to_id[pup['name']] not in has_descendants for pup in puppies) and len(puppies) > 1:
             filtered_litters[litter_key] = litter_data
         else:
             for pup in puppies:

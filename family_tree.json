@@ -95,39 +95,6 @@
     ]
   },
   {
-    "id": 25,
-    "name": "Помёт Р",
-    "fid": 18,
-    "mid": 1,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 26,
-    "name": "Помёт К",
-    "fid": 19,
-    "mid": 2,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Помёт М",
-    "fid": 17,
-    "mid": 3,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
     "id": 1,
     "name": "Аня",
     "gender": "female",
@@ -206,9 +173,8 @@
     "gender": "male",
     "birthdate": "2025-01-03",
     "pass_name": "Самолла Ритм",
-    "stpid": 25,
-    "fid": null,
-    "mid": null,
+    "fid": 18,
+    "mid": 1,
     "web": "https://vk.com/mudialiexpress",
     "city": "Москва",
     "litter_key": "18_1_1/3/2025",
@@ -233,9 +199,8 @@
     "gender": "female",
     "birthdate": "2021-02-11",
     "pass_name": "Самолла Ксена",
-    "stpid": 26,
-    "fid": null,
-    "mid": null,
+    "fid": 19,
+    "mid": 2,
     "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
     "city": "Екатеринбург",
     "master_note": "Маленький ураган летящий за тарелками  :)",
@@ -263,9 +228,8 @@
     "gender": "female",
     "birthdate": "2023-07-11",
     "pass_name": "Самолла Миеликки",
-    "stpid": 27,
-    "fid": null,
-    "mid": null,
+    "fid": 17,
+    "mid": 3,
     "web": "https://t.me/damekko_petshop",
     "city": "Санкт-Петербург",
     "litter_key": "17_3_7/11/2023",
