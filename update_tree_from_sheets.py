@@ -4,20 +4,33 @@ from collections import defaultdict, OrderedDict
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
 from datetime import datetime
+import re
 from googleapiclient.http import MediaIoBaseDownload
 import io
 import os
 
 def extract_drive_file_id(url):
+    """
+    Извлекает ID файла из ссылки Google Drive.
+    Поддерживает форматы:
+    - https://drive.google.com/open?id=FILE_ID
+    - https://drive.google.com/file/d/FILE_ID/view
+    - https://docs.google.com/document/d/FILE_ID/edit
+    """
+    # Проверяем параметр id= в URL
     match = re.search(r'id=([a-zA-Z0-9_-]+)', url)
     if match:
         return match.group(1)
+    # Проверяем формат /d/FILE_ID/
     match = re.search(r'/d/([a-zA-Z0-9_-]+)', url)
     if match:
         return match.group(1)
     return None
 
+
+
 def rus_to_translit(text):
+    # Словарь для замены русских букв на транслит
     translit_dict = {
         'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'E', 'Ж': 'Zh',
         'З': 'Z', 'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O',
@@ -32,10 +45,11 @@ def rus_to_translit(text):
     }
     return ''.join(translit_dict.get(c, c) for c in text)
 
-# Конфигурация
+# Конфигурация: замените на ваши путь к credentials json и ID таблицы
 SERVICE_ACCOUNT_FILE = 'samolla-b4398f9d675c.json'
 SPREADSHEET_ID = '1dQJqfypqLYssxCj--e3rt5Ufv-8olgJp1mwA_erjX_0'
-RANGE_NAME = 'Sheet1'
+RANGE_NAME = 'Sheet1'  # или ваш лист
+
 
 def load_google_sheet():
     creds = Credentials.from_service_account_file(
@@ -43,7 +57,9 @@ def load_google_sheet():
         scopes=['https://www.googleapis.com/auth/spreadsheets.readonly']
     )
     service = build('sheets', 'v4', credentials=creds)
-    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
+                               range=RANGE_NAME).execute()
     values = result.get('values', [])
     if not values:
         raise Exception('No data found in Google Sheet.')
@@ -58,6 +74,8 @@ def load_google_sheet():
     return data
 
 def load_drive():
+
+    # Создаем credentials и сервис
     credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=['https://www.googleapis.com/auth/drive.readonly'])
     service = build('drive', 'v3', credentials=credentials)
     return service
@@ -75,148 +93,181 @@ def build_family_tree(data):
     
     id_gen = IdGenerator()
     name_to_data = OrderedDict()
+
+    # Удалить дубликаты по имени, оставляя последнюю встречу
     for d in data:
         name_to_data[d['name']] = d
     unique_data = list(reversed(list(name_to_data.values())))
 
     name_to_id = {}
     parent_nodes = {}
-    litters = {}
+    litters = {}  # litter_key -> {'id': int, 'puppies': list}
     parents_partners = defaultdict(set)
-    has_descendants = set()
-    child_to_parents = {}  # ИСПРАВЛЕНИЕ: сохраняем связи fid/mid для каждого ребёнка
 
-    def get_or_create_id(name, gender=None):
+    def get_or_create_id(name, gender = None):
         if not name:
             return None
         if name not in name_to_id:
             new_id = id_gen.get_next()
             name_to_id[name] = new_id
             parent_nodes[new_id] = {
-                'id': new_id, 'name': name, 'gender': gender,
-                'isParent': True, 'pids': set()
+                'id': new_id,
+                'name': name,
+                'gender': gender,
+                'isParent': True,
+                'pids': set()
             }
         return name_to_id[name]
 
     # Присвоить id всем собакам
     for d in unique_data:
-        name_to_id.setdefault(d['name'], id_gen.get_next())
+        if d['name'] not in name_to_id:
+            name_to_id[d['name']] = id_gen.get_next()
 
-    # Обработать родителей, партнёрства, потомков и связи детей
+    # Получить id родителей и записать партнёрства
     for d in unique_data:
         fid = get_or_create_id(d.get('father'), 'male')
         mid = get_or_create_id(d.get('mother'), 'female')
         d['fid'] = fid
         d['mid'] = mid
-        child_id = name_to_id[d['name']]
-        child_to_parents[child_id] = (fid, mid)  # ИСПРАВЛЕНИЕ
-        if fid: has_descendants.add(fid)
-        if mid: has_descendants.add(mid)
         if fid and mid:
             parents_partners[fid].add(mid)
             parents_partners[mid].add(fid)
 
-    # Создать помёты
+    # Создать помёты (литтеры)
     for d in unique_data:
         fid = d['fid']
         mid = d['mid']
         birthdate = d.get('birthdate')
-        if fid is None or mid is None or not birthdate: continue
+        if fid is None or mid is None or not birthdate:
+            continue
         litter_key = f'{fid}_{mid}_{birthdate}'
         if litter_key not in litters:
             litters[litter_key] = {'id': id_gen.get_next(), 'puppies': []}
         litters[litter_key]['puppies'].append(d)
-        d['stpid'] = litters[litter_key]['id']
-
-    # Фильтрация помётов: только без потомков у щенков
-    filtered_litters = {}
-    for litter_key, litter_data in litters.items():
-        puppies = litter_data['puppies']
-        if all(name_to_id[pup['name']] not in has_descendants for pup in puppies):
-            filtered_litters[litter_key] = litter_data
-        else:
-            for pup in puppies:
-                pup.pop('stpid', None)
+        #d['stpid'] = litters[litter_key]['id']
+        
+        litter_char = None            
+        pass_name = d.get('pass_name')
+        if pass_name:
+            words = re.split(r'\s+', pass_name.strip())
+            if len(words) >= 2:
+                litter_char = words[1][0]
+                break
+        if not litter_char:
+            litter_char = '?'
+        
+        d['litter'] = litter_char
 
     nodes = []
 
-    # Родители с партнёрами
+    # Добавить родителей с партнёрами
     for pid, node in parent_nodes.items():
         node['pids'] = list(parents_partners[pid]) if parents_partners[pid] else None
-        node_data = {'id': node['id'], 'name': node['name'], 'gender': node['gender']}
-        if node['pids']: node_data['pids'] = node['pids']
+        node_data = {
+            'id': node['id'],
+            'name': node['name'],
+            'gender': node['gender']
+        }
+        if node['pids']:
+            node_data['pids'] = node['pids']
         node_data['isParent'] = True
         nodes.append(node_data)
 
-    # Помёты из filtered_litters
-    for litter_key, litter_data in filtered_litters.items():
-        puppies = litter_data['puppies']
-        litter_char = None
-        for pup in puppies:
-            pass_name = pup.get('pass_name')
-            if pass_name:
-                words = re.split(r'\s+', pass_name.strip())
-                if len(words) >= 2:
-                    litter_char = words[1][0]
-                    break
-        if not litter_char: litter_char = '?'
-        for pup in puppies:
-            pass_name = pup.get('pass_name')
-            if pass_name:
-                words = re.split(r'\s+', pass_name.strip())
-                if len(words) < 2 or words[1][0] != litter_char:
-                    litter_char = '!'
-                    break
-        fid, mid, _ = litter_key.split('_')
-        litter_node = {
-            'id': litter_data['id'], 'name': f'Помёт {litter_char}',
-            'fid': int(fid), 'mid': int(mid), 'gender': None,
-            'isLitter': True, 'tags': ['node-with-subtrees']
-        }
-        nodes.append(litter_node)
+    # Добавить помёты с именем из pass_name и тегом
+    # for litter_key, litter_data in litters.items():
+    #     puppies = litter_data['puppies']
+    #     #if len(puppies) > 1:
+    #     litter_char = None
+    #     # Определяем первую букву второго слова pass_name любого щенка из помёта
+    #     for pup in puppies:
+    #         pass_name = pup.get('pass_name')
+    #         if pass_name:
+    #             words = re.split(r'\s+', pass_name.strip())
+    #             if len(words) >= 2:
+    #                 litter_char = words[1][0]
+    #                 break
+    #     if not litter_char:
+    #         litter_char = '?'
+    #     # Проверяем совпадение буквы вторых слов у всех щенков
+    #     for pup in puppies:
+    #         pass_name = pup.get('pass_name')
+    #         if pass_name:
+    #             words = re.split(r'\s+', pass_name.strip())
+    #             if len(words) < 2 or words[1][0] != litter_char:
+    #                 litter_char = '!'
+    #                 break
 
-    # Щенки с восстановленными fid/mid и stpid
+    #     fid, mid, birthdate = litter_key.split('_')
+    #     litter_node = {
+    #         'id': litter_data['id'],
+    #         'name': f'Помёт {litter_char}',
+    #         'fid': int(fid),
+    #         'mid': int(mid),
+    #         'gender': None,
+    #         'isLitter': True,
+    #         'tags': ['node-with-subtrees']
+    #     }
+    #     nodes.append(litter_node)
+    #     #else:
+            
+
+    # Добавить щенков, конвертируя gender, исключая игнорируемые поля    
+
     for d in unique_data:
-        child_id = name_to_id[d['name']]
-        fid, mid = child_to_parents.get(child_id, (None, None))  # ИСПРАВЛЕНИЕ: связи сохранены
-
         gender = d.get('gender')
         if gender:
             gender = gender.strip().upper()
-            gender = 'male' if gender == 'М' else 'female' if gender == 'Ж' else None
+            if gender == 'М':
+                gender = 'male'
+            elif gender == 'Ж':
+                gender = 'female'
+            else:
+                gender = None
 
         node = {
-            'id': child_id, 'name': d['name'], 'gender': gender,
+            'id': name_to_id[d['name']],
+            'name': d['name'],
+            'gender': gender,
             'birthdate': datetime.strptime(d.get('birthdate'), "%m/%d/%Y").strftime("%Y-%m-%d"),
-            'pass_name': d.get('pass_name'), 'stpid': d.get('stpid'),
-            'fid': fid, 'mid': mid  # ИСПРАВЛЕНИЕ
+            'pass_name': d.get('pass_name'),
+            #'stpid': d.get('stpid'),
+            'fid': d['fid'],
+            'mid': d['mid'],                    
         }
-        if d.get('web') is not None:
+        
+        if not d.get('web') is None:            
             node['web'] = d.get('web').replace(' ', '\n')
+            
+        if not d.get('litter') is None and d['litter'] != '?':
+            node['litter'] = d['litter']        
+        
+        # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
-            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'father', 'mother', 'timestamp', 'url_photo', 'isParent', 'web'}:
+            if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo', 'isParent', 'web'}:
                 if v is not None:
                     node[k] = v
         nodes.append(node)
-
-        # Фото (без изменений)
+        
         url_photo = d.get('url_photo')
         if url_photo:
             photo_id = extract_drive_file_id(url_photo)
-            if photo_id:
-                dog_name_translit = 'dog_photos/' + rus_to_translit(node['name']) + "_" + d.get('timestamp').replace('/', '_').replace(' ', '_').replace(":", '_') + '.jpg'
-                if not os.path.exists(dog_name_translit):
-                    request = drive_srv.files().get_media(fileId=photo_id)
-                    fh = io.FileIO(dog_name_translit, 'wb')
+            if photo_id:                                
+                dog_name_translit = 'dog_photos/' + rus_to_translit(node['name']) + "_" + d.get('timestamp').replace('/', '_').replace(' ', '_').replace(":", '_')+ '.jpg'
+                
+                if not os.path.exists(dog_name_translit):                
+                    request = drive_srv.files().get_media(fileId=photo_id)                    
+                    fh = io.FileIO(f'{dog_name_translit}', 'wb')    
                     downloader = MediaIoBaseDownload(fh, request)
-                    done = False
+                    done = False    
                     while not done:
                         status, done = downloader.next_chunk()
                         print(f"Загрузка {dog_name_translit} {int(status.progress() * 100)}%")
                     fh.close()
                 else:
                     print(f'Skip {dog_name_translit}')
-                node['photo'] = dog_name_translit
+                    
+                node['photo'] = dog_name_translit                
 
     return nodes
 

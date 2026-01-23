@@ -73,69 +73,15 @@
     "isParent": true
   },
   {
-    "id": 23,
-    "name": "Помёт П",
-    "fid": 17,
-    "mid": 3,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 24,
-    "name": "Помёт С",
-    "fid": 18,
-    "mid": 3,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 25,
-    "name": "Помёт Р",
-    "fid": 18,
-    "mid": 1,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 26,
-    "name": "Помёт К",
-    "fid": 19,
-    "mid": 2,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 27,
-    "name": "Помёт М",
-    "fid": 17,
-    "mid": 3,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
     "id": 1,
     "name": "Аня",
     "gender": "female",
     "birthdate": "2021-10-24",
     "pass_name": "Kacifantos Annacska",
-    "stpid": null,
     "fid": 12,
     "mid": 13,
+    "father": "Бойти",
+    "mother": "Кишасонь",
     "photo": "dog_photos/Anya_10_14_2025_23_21_06.jpg"
   },
   {
@@ -144,9 +90,10 @@
     "gender": "female",
     "birthdate": "2013-10-30",
     "pass_name": "Kunok Kincse Nyüszgö",
-    "stpid": null,
     "fid": 14,
     "mid": 15,
+    "father": "Богар",
+    "mother": "Феньеш",
     "photo": "dog_photos/Nyusha_10_14_2025_23_18_22.jpg"
   },
   {
@@ -155,9 +102,10 @@
     "gender": "female",
     "birthdate": "2018-02-02",
     "pass_name": "Самолла Гарпалика",
-    "stpid": null,
     "fid": 16,
     "mid": 2,
+    "father": "Хуути",
+    "mother": "Нюша",
     "city": "Питер",
     "photo": "dog_photos/Palka_10_14_2025_23_14_58.jpg"
   },
@@ -167,9 +115,10 @@
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Паприка",
-    "stpid": 23,
     "fid": 17,
     "mid": 3,
+    "father": "Мага",
+    "mother": "Палка",
     "city": "Питер",
     "photo": "dog_photos/Kukla_10_14_2025_23_12_37.jpg"
   },
@@ -179,10 +128,11 @@
     "gender": "female",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сарин",
-    "stpid": 24,
     "fid": 18,
     "mid": 3,
     "web": "",
+    "father": "Тарас",
+    "mother": "Палка",
     "city": "Москва",
     "master_note": "Самая маленькая и самая наглая)",
     "photo": "dog_photos/Sarra_10_7_2025_13_43_42.jpg"
@@ -193,10 +143,11 @@
     "gender": "male",
     "birthdate": "2025-01-03",
     "pass_name": "Самолла Ритм",
-    "stpid": 25,
     "fid": 18,
     "mid": 1,
     "web": "https://vk.com/mudialiexpress",
+    "father": "Тарас",
+    "mother": "Аня",
     "city": "Москва",
     "photo": "dog_photos/Drakkar_10_3_2025_20_11_10.jpg"
   },
@@ -206,9 +157,10 @@
     "gender": "male",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пряник",
-    "stpid": 23,
     "fid": 17,
     "mid": 3,
+    "father": "Мага",
+    "mother": "Палка",
     "city": "Санкт-Петербург ",
     "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
   },
@@ -218,10 +170,11 @@
     "gender": "female",
     "birthdate": "2021-02-11",
     "pass_name": "Самолла Ксена",
-    "stpid": 26,
     "fid": 19,
     "mid": 2,
     "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
+    "father": "Рубик",
+    "mother": "Нюша",
     "city": "Екатеринбург",
     "master_note": "Маленький ураган летящий за тарелками  :)",
     "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
@@ -232,10 +185,11 @@
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пиратка",
-    "stpid": 23,
     "fid": 17,
     "mid": 3,
     "web": "",
+    "father": "Мага",
+    "mother": "Палка",
     "city": "Санкт-Петербург",
     "master_note": "Стремительная, умная, выносливая, громкая",
     "photo": "dog_photos/Dina_9_30_2025_20_24_46.jpg"
@@ -246,10 +200,11 @@
     "gender": "female",
     "birthdate": "2023-07-11",
     "pass_name": "Самолла Миеликки",
-    "stpid": 27,
     "fid": 17,
     "mid": 3,
     "web": "https://t.me/damekko_petshop",
+    "father": "Мага",
+    "mother": "Палка",
     "city": "Санкт-Петербург",
     "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
   },
@@ -259,10 +214,11 @@
     "gender": "male",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сириус",
-    "stpid": 24,
     "fid": 18,
     "mid": 3,
     "web": "https://vk.com/watson.alba.askeladd",
+    "father": "Тарас",
+    "mother": "Палка",
     "city": "Москва",
     "master_note": "Zasranetz! ",
     "photo": "dog_photos/Askeladd_10_7_2025_19_29_25.jpg"
