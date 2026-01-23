@@ -225,16 +225,21 @@ def build_family_tree(data):
             else:
                 gender = None
 
+
+        id = name_to_id[d['name']]
         node = {
-            'id': name_to_id[d['name']],
+            'id': id,
             'name': d['name'],
             'gender': gender,
             'birthdate': datetime.strptime(d.get('birthdate'), "%m/%d/%Y").strftime("%Y-%m-%d"),
             'pass_name': d.get('pass_name'),
             #'stpid': d.get('stpid'),
             'fid': d['fid'],
-            'mid': d['mid'],                    
+            'mid': d['mid'],          
         }
+        
+        if id in parents_partners:
+            node['pids'] = list(parents_partners[id])
         
         if not d.get('web') is None:            
             node['web'] = d.get('web').replace(' ', '\n')
