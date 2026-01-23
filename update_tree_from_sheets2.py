@@ -203,7 +203,7 @@ def build_family_tree(data):
             node['pids'] = list(parents_partners[child_id])
         
         if d.get('web') is not None:
-            node['web'] = d.get('web').replace(' ', '\n')
+            node['web'] = d.get('web') #.replace(' ', '\n')
         for k, v in d.items():
             if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'father', 'mother', 'timestamp', 'url_photo', 'isParent', 'web'}:
                 if v is not None:
