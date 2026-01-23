@@ -73,39 +73,6 @@
     "isParent": true
   },
   {
-    "id": 20,
-    "name": "Помёт A",
-    "fid": 12,
-    "mid": 13,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Помёт K",
-    "fid": 14,
-    "mid": 15,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 22,
-    "name": "Помёт Г",
-    "fid": 16,
-    "mid": 2,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
     "id": 23,
     "name": "Помёт П",
     "fid": 17,
@@ -166,14 +133,9 @@
     "gender": "female",
     "birthdate": "2021-10-24",
     "pass_name": "Kacifantos Annacska",
-    "stpid": 20,
-    "fid": null,
-    "mid": null,
-    "pids": [
-      18
-    ],
-    "father": "Бойти",
-    "mother": "Кишасонь",
+    "fid": 12,
+    "mid": 13,
+    "litter_key": "12_13_10/24/2021",
     "photo": "dog_photos/Anya_10_14_2025_23_21_06.jpg"
   },
   {
@@ -182,15 +144,9 @@
     "gender": "female",
     "birthdate": "2013-10-30",
     "pass_name": "Kunok Kincse Nyüszgö",
-    "stpid": 21,
-    "fid": null,
-    "mid": null,
-    "pids": [
-      16,
-      19
-    ],
-    "father": "Богар",
-    "mother": "Феньеш",
+    "fid": 14,
+    "mid": 15,
+    "litter_key": "14_15_10/30/2013",
     "photo": "dog_photos/Nyusha_10_14_2025_23_18_22.jpg"
   },
   {
@@ -199,16 +155,10 @@
     "gender": "female",
     "birthdate": "2018-02-02",
     "pass_name": "Самолла Гарпалика",
-    "stpid": 22,
-    "fid": null,
-    "mid": null,
-    "pids": [
-      17,
-      18
-    ],
-    "father": "Хуути",
-    "mother": "Нюша",
+    "fid": 16,
+    "mid": 2,
     "city": "Питер",
+    "litter_key": "16_2_2/2/2018",
     "photo": "dog_photos/Palka_10_14_2025_23_14_58.jpg"
   },
   {
@@ -220,9 +170,8 @@
     "stpid": 23,
     "fid": null,
     "mid": null,
-    "father": "Мага",
-    "mother": "Палка",
     "city": "Питер",
+    "litter_key": "17_3_8/10/2024",
     "photo": "dog_photos/Kukla_10_14_2025_23_12_37.jpg"
   },
   {
@@ -235,10 +184,9 @@
     "fid": null,
     "mid": null,
     "web": "",
-    "father": "Тарас",
-    "mother": "Палка",
     "city": "Москва",
     "master_note": "Самая маленькая и самая наглая)",
+    "litter_key": "18_3_3/6/2025",
     "photo": "dog_photos/Sarra_10_7_2025_13_43_42.jpg"
   },
   {
@@ -251,9 +199,8 @@
     "fid": null,
     "mid": null,
     "web": "https://vk.com/mudialiexpress",
-    "father": "Тарас",
-    "mother": "Аня",
     "city": "Москва",
+    "litter_key": "18_1_1/3/2025",
     "photo": "dog_photos/Drakkar_10_3_2025_20_11_10.jpg"
   },
   {
@@ -265,9 +212,8 @@
     "stpid": 23,
     "fid": null,
     "mid": null,
-    "father": "Мага",
-    "mother": "Палка",
     "city": "Санкт-Петербург ",
+    "litter_key": "17_3_8/10/2024",
     "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
   },
   {
@@ -280,10 +226,9 @@
     "fid": null,
     "mid": null,
     "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
-    "father": "Рубик",
-    "mother": "Нюша",
     "city": "Екатеринбург",
     "master_note": "Маленький ураган летящий за тарелками  :)",
+    "litter_key": "19_2_2/11/2021",
     "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
   },
   {
@@ -296,10 +241,9 @@
     "fid": null,
     "mid": null,
     "web": "",
-    "father": "Мага",
-    "mother": "Палка",
     "city": "Санкт-Петербург",
     "master_note": "Стремительная, умная, выносливая, громкая",
+    "litter_key": "17_3_8/10/2024",
     "photo": "dog_photos/Dina_9_30_2025_20_24_46.jpg"
   },
   {
@@ -312,9 +256,8 @@
     "fid": null,
     "mid": null,
     "web": "https://t.me/damekko_petshop",
-    "father": "Мага",
-    "mother": "Палка",
     "city": "Санкт-Петербург",
+    "litter_key": "17_3_7/11/2023",
     "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
   },
   {
@@ -327,10 +270,9 @@
     "fid": null,
     "mid": null,
     "web": "https://vk.com/watson.alba.askeladd",
-    "father": "Тарас",
-    "mother": "Палка",
     "city": "Москва",
     "master_note": "Zasranetz! ",
+    "litter_key": "18_3_3/6/2025",
     "photo": "dog_photos/Askeladd_10_7_2025_19_29_25.jpg"
   }
 ]
