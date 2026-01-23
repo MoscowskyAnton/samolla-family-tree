@@ -135,6 +135,9 @@
     "pass_name": "Kacifantos Annacska",
     "fid": 12,
     "mid": 13,
+    "pids": [
+      18
+    ],
     "litter_key": "12_13_10/24/2021",
     "photo": "dog_photos/Anya_10_14_2025_23_21_06.jpg"
   },
@@ -146,6 +149,10 @@
     "pass_name": "Kunok Kincse Nyüszgö",
     "fid": 14,
     "mid": 15,
+    "pids": [
+      16,
+      19
+    ],
     "litter_key": "14_15_10/30/2013",
     "photo": "dog_photos/Nyusha_10_14_2025_23_18_22.jpg"
   },
@@ -157,6 +164,10 @@
     "pass_name": "Самолла Гарпалика",
     "fid": 16,
     "mid": 2,
+    "pids": [
+      17,
+      18
+    ],
     "city": "Питер",
     "litter_key": "16_2_2/2/2018",
     "photo": "dog_photos/Palka_10_14_2025_23_14_58.jpg"

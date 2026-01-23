@@ -199,6 +199,9 @@ def build_family_tree(data):
             node['fid'] = fid
             node['mid'] = mid
         
+        if child_id in parents_partners:
+            node['pids'] = list(parents_partners[child_id])
+        
         if d.get('web') is not None:
             node['web'] = d.get('web').replace(' ', '\n')
         for k, v in d.items():
