@@ -175,41 +175,41 @@ def build_family_tree(data):
         nodes.append(node_data)
 
     # Добавить помёты с именем из pass_name и тегом
-    # for litter_key, litter_data in litters.items():
-    #     puppies = litter_data['puppies']
-    #     #if len(puppies) > 1:
-    #     litter_char = None
-    #     # Определяем первую букву второго слова pass_name любого щенка из помёта
-    #     for pup in puppies:
-    #         pass_name = pup.get('pass_name')
-    #         if pass_name:
-    #             words = re.split(r'\s+', pass_name.strip())
-    #             if len(words) >= 2:
-    #                 litter_char = words[1][0]
-    #                 break
-    #     if not litter_char:
-    #         litter_char = '?'
-    #     # Проверяем совпадение буквы вторых слов у всех щенков
-    #     for pup in puppies:
-    #         pass_name = pup.get('pass_name')
-    #         if pass_name:
-    #             words = re.split(r'\s+', pass_name.strip())
-    #             if len(words) < 2 or words[1][0] != litter_char:
-    #                 litter_char = '!'
-    #                 break
+    for litter_key, litter_data in litters.items():
+        puppies = litter_data['puppies']
+        #if len(puppies) > 1:
+        litter_char = None
+        # Определяем первую букву второго слова pass_name любого щенка из помёта
+        for pup in puppies:
+            pass_name = pup.get('pass_name')
+            if pass_name:
+                words = re.split(r'\s+', pass_name.strip())
+                if len(words) >= 2:
+                    litter_char = words[1][0]
+                    break
+        if not litter_char:
+            litter_char = '?'
+        # Проверяем совпадение буквы вторых слов у всех щенков
+        for pup in puppies:
+            pass_name = pup.get('pass_name')
+            if pass_name:
+                words = re.split(r'\s+', pass_name.strip())
+                if len(words) < 2 or words[1][0] != litter_char:
+                    litter_char = '!'
+                    break
 
-    #     fid, mid, birthdate = litter_key.split('_')
-    #     litter_node = {
-    #         'id': litter_data['id'],
-    #         'name': f'Помёт {litter_char}',
-    #         'fid': int(fid),
-    #         'mid': int(mid),
-    #         'gender': None,
-    #         'isLitter': True,
-    #         'tags': ['node-with-subtrees']
-    #     }
-    #     nodes.append(litter_node)
-    #     #else:
+        fid, mid, birthdate = litter_key.split('_')
+        litter_node = {
+            'id': litter_data['id'],
+            'name': f'Помёт {litter_char}',
+            'fid': int(fid),
+            'mid': int(mid),
+            'gender': None,
+            'isLitter': True,
+            'tags': ['node-with-subtrees']
+        }
+        nodes.append(litter_node)
+    
             
 
     # Добавить щенков, конвертируя gender, исключая игнорируемые поля    

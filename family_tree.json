@@ -73,6 +73,17 @@
     "isParent": true
   },
   {
+    "id": 20,
+    "name": "Помёт A",
+    "fid": 12,
+    "mid": 13,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
     "id": 1,
     "name": "Аня",
     "gender": "female",
