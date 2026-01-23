@@ -233,9 +233,9 @@ def build_family_tree(data):
             'gender': gender,
             'birthdate': datetime.strptime(d.get('birthdate'), "%m/%d/%Y").strftime("%Y-%m-%d"),
             'pass_name': d.get('pass_name'),
-            #'stpid': d.get('stpid'),
-            'fid': d['fid'],
-            'mid': d['mid'],          
+            'stpid': d.get('stpid'),
+            #'fid': d['fid'],
+            #'mid': d['mid'],          
         }
         
         if id in parents_partners:
