@@ -13,9 +13,9 @@ def extract_drive_file_id(url):
     """
     Извлекает ID файла из ссылки Google Drive.
     Поддерживает форматы:
-    - https://drive.google.com/open?id=FILE_ID
-    - https://drive.google.com/file/d/FILE_ID/view
-    - https://docs.google.com/document/d/FILE_ID/edit
+    - [https://drive.google.com/open?id=FILE_ID](https://drive.google.com/open?id=FILE_ID)
+    - [https://drive.google.com/file/d/FILE_ID/view](https://drive.google.com/file/d/FILE_ID/view)
+    - [https://docs.google.com/document/d/FILE_ID/edit](https://docs.google.com/document/d/FILE_ID/edit)
     """
     # Проверяем параметр id= в URL
     match = re.search(r'id=([a-zA-Z0-9_-]+)', url)
@@ -26,8 +26,6 @@ def extract_drive_file_id(url):
     if match:
         return match.group(1)
     return None
-
-
 
 def rus_to_translit(text):
     # Словарь для замены русских букв на транслит
@@ -49,7 +47,6 @@ def rus_to_translit(text):
 SERVICE_ACCOUNT_FILE = 'samolla-b4398f9d675c.json'
 SPREADSHEET_ID = '1dQJqfypqLYssxCj--e3rt5Ufv-8olgJp1mwA_erjX_0'
 RANGE_NAME = 'Sheet1'  # или ваш лист
-
 
 def load_google_sheet():
     creds = Credentials.from_service_account_file(
@@ -74,8 +71,6 @@ def load_google_sheet():
     return data
 
 def load_drive():
-
-    # Создаем credentials и сервис
     credentials = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=['https://www.googleapis.com/auth/drive.readonly'])
     service = build('drive', 'v3', credentials=credentials)
     return service
@@ -103,6 +98,7 @@ def build_family_tree(data):
     parent_nodes = {}
     litters = {}  # litter_key -> {'id': int, 'puppies': list}
     parents_partners = defaultdict(set)
+    has_descendants = set()  # ИСПРАВЛЕНИЕ: отслеживаем собак с потомками
 
     def get_or_create_id(name, gender = None):
         if not name:
@@ -124,12 +120,16 @@ def build_family_tree(data):
         if d['name'] not in name_to_id:
             name_to_id[d['name']] = id_gen.get_next()
 
-    # Получить id родителей и записать партнёрства
+    # Получить id родителей, записать партнёрства И отметить собак с потомками
     for d in unique_data:
         fid = get_or_create_id(d.get('father'), 'male')
         mid = get_or_create_id(d.get('mother'), 'female')
         d['fid'] = fid
         d['mid'] = mid
+        if fid:
+            has_descendants.add(fid)  # ИСПРАВЛЕНИЕ
+        if mid:
+            has_descendants.add(mid)  # ИСПРАВЛЕНИЕ
         if fid and mid:
             parents_partners[fid].add(mid)
             parents_partners[mid].add(fid)
@@ -147,6 +147,18 @@ def build_family_tree(data):
         litters[litter_key]['puppies'].append(d)
         d['stpid'] = litters[litter_key]['id']
 
+    # ИСПРАВЛЕНИЕ: фильтруем помёты - только те, где ни один щенок без потомков
+    filtered_litters = {}
+    for litter_key, litter_data in litters.items():
+        puppies = litter_data['puppies']
+        can_group = all(name_to_id[pup['name']] not in has_descendants for pup in puppies)
+        if can_group:
+            filtered_litters[litter_key] = litter_data
+        else:
+            # Разгруппировываем: удаляем stpid
+            for pup in puppies:
+                pup.pop('stpid', None)
+
     nodes = []
 
     # Добавить родителей с партнёрами
@@ -162,10 +174,9 @@ def build_family_tree(data):
         node_data['isParent'] = True
         nodes.append(node_data)
 
-    # Добавить помёты с именем из pass_name и тегом
-    for litter_key, litter_data in litters.items():
+    # Добавить помёты только из filtered_litters
+    for litter_key, litter_data in filtered_litters.items():
         puppies = litter_data['puppies']
-        #if len(puppies) > 1:
         litter_char = None
         # Определяем первую букву второго слова pass_name любого щенка из помёта
         for pup in puppies:
@@ -197,11 +208,8 @@ def build_family_tree(data):
             'tags': ['node-with-subtrees']
         }
         nodes.append(litter_node)
-        #else:
-            
 
-    # Добавить щенков, конвертируя gender, исключая игнорируемые поля    
-
+    # Добавить щенков (stpid только для grouped)
     for d in unique_data:
         gender = d.get('gender')
         if gender:
@@ -224,21 +232,21 @@ def build_family_tree(data):
             'mid': None,            
         }
         
-        if not d.get('web') is None:            
+        if d.get('web') is not None:            
             node['web'] = d.get('web').replace(' ', '\n')
-        
         
         # Добавляем все дополнительные поля, кроме служебных и игнорируемых
         for k, v in d.items():
             if k not in {'name', 'gender', 'birthdate', 'pass_name', 'stpid', 'fid', 'mid', 'timestamp', 'url_photo', 'isParent', 'web'}:
                 if v is not None:
                     node[k] = v
+        
         nodes.append(node)
         
         url_photo = d.get('url_photo')
         if url_photo:
             photo_id = extract_drive_file_id(url_photo)
-            if photo_id:                                
+            if photo_id:                                 
                 dog_name_translit = 'dog_photos/' + rus_to_translit(node['name']) + "_" + d.get('timestamp').replace('/', '_').replace(' ', '_').replace(":", '_')+ '.jpg'
                 
                 if not os.path.exists(dog_name_translit):                

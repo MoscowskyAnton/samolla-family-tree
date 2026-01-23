@@ -73,39 +73,6 @@
     "isParent": true
   },
   {
-    "id": 20,
-    "name": "Помёт A",
-    "fid": 12,
-    "mid": 13,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 21,
-    "name": "Помёт K",
-    "fid": 14,
-    "mid": 15,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
-    "id": 22,
-    "name": "Помёт Г",
-    "fid": 16,
-    "mid": 2,
-    "gender": null,
-    "isLitter": true,
-    "tags": [
-      "node-with-subtrees"
-    ]
-  },
-  {
     "id": 23,
     "name": "Помёт П",
     "fid": 17,
@@ -166,7 +133,7 @@
     "gender": "female",
     "birthdate": "2021-10-24",
     "pass_name": "Kacifantos Annacska",
-    "stpid": 20,
+    "stpid": null,
     "fid": null,
     "mid": null,
     "father": "Бойти",
@@ -179,7 +146,7 @@
     "gender": "female",
     "birthdate": "2013-10-30",
     "pass_name": "Kunok Kincse Nyüszgö",
-    "stpid": 21,
+    "stpid": null,
     "fid": null,
     "mid": null,
     "father": "Богар",
@@ -192,7 +159,7 @@
     "gender": "female",
     "birthdate": "2018-02-02",
     "pass_name": "Самолла Гарпалика",
-    "stpid": 22,
+    "stpid": null,
     "fid": null,
     "mid": null,
     "father": "Хуути",
