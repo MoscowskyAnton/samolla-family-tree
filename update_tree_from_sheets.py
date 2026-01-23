@@ -145,19 +145,19 @@ def build_family_tree(data):
         if litter_key not in litters:
             litters[litter_key] = {'id': id_gen.get_next(), 'puppies': []}
         litters[litter_key]['puppies'].append(d)
-        #d['stpid'] = litters[litter_key]['id']
+        d['stpid'] = litters[litter_key]['id']
         
-        litter_char = None            
-        pass_name = d.get('pass_name')
-        if pass_name:
-            words = re.split(r'\s+', pass_name.strip())
-            if len(words) >= 2:
-                litter_char = words[1][0]
-                break
-        if not litter_char:
-            litter_char = '?'
+        # litter_char = None            
+        # pass_name = d.get('pass_name')
+        # if pass_name:
+        #     words = re.split(r'\s+', pass_name.strip())
+        #     if len(words) >= 2:
+        #         litter_char = words[1][0]
+        #         break
+        # if not litter_char:
+        #     litter_char = '?'
         
-        d['litter'] = litter_char
+        # d['litter'] = litter_char
 
     nodes = []
 

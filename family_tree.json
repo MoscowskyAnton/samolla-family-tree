@@ -84,12 +84,89 @@
     ]
   },
   {
+    "id": 21,
+    "name": "Помёт K",
+    "fid": 14,
+    "mid": 15,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 22,
+    "name": "Помёт Г",
+    "fid": 16,
+    "mid": 2,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Помёт П",
+    "fid": 17,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Помёт С",
+    "fid": 18,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Помёт Р",
+    "fid": 18,
+    "mid": 1,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Помёт К",
+    "fid": 19,
+    "mid": 2,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Помёт М",
+    "fid": 17,
+    "mid": 3,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
     "id": 1,
     "name": "Аня",
     "gender": "female",
     "birthdate": "2021-10-24",
     "pass_name": "Kacifantos Annacska",
-    "stpid": null,
+    "stpid": 20,
     "fid": null,
     "mid": null,
     "pids": [
@@ -105,7 +182,7 @@
     "gender": "female",
     "birthdate": "2013-10-30",
     "pass_name": "Kunok Kincse Nyüszgö",
-    "stpid": null,
+    "stpid": 21,
     "fid": null,
     "mid": null,
     "pids": [
@@ -122,7 +199,7 @@
     "gender": "female",
     "birthdate": "2018-02-02",
     "pass_name": "Самолла Гарпалика",
-    "stpid": null,
+    "stpid": 22,
     "fid": null,
     "mid": null,
     "pids": [
@@ -140,7 +217,7 @@
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Паприка",
-    "stpid": null,
+    "stpid": 23,
     "fid": null,
     "mid": null,
     "father": "Мага",
@@ -154,7 +231,7 @@
     "gender": "female",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сарин",
-    "stpid": null,
+    "stpid": 24,
     "fid": null,
     "mid": null,
     "web": "",
@@ -170,7 +247,7 @@
     "gender": "male",
     "birthdate": "2025-01-03",
     "pass_name": "Самолла Ритм",
-    "stpid": null,
+    "stpid": 25,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/mudialiexpress",
@@ -185,7 +262,7 @@
     "gender": "male",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пряник",
-    "stpid": null,
+    "stpid": 23,
     "fid": null,
     "mid": null,
     "father": "Мага",
@@ -199,7 +276,7 @@
     "gender": "female",
     "birthdate": "2021-02-11",
     "pass_name": "Самолла Ксена",
-    "stpid": null,
+    "stpid": 26,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/tw0_geese\nhttps://t.me/toothy_goose",
@@ -215,7 +292,7 @@
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пиратка",
-    "stpid": null,
+    "stpid": 23,
     "fid": null,
     "mid": null,
     "web": "",
@@ -231,7 +308,7 @@
     "gender": "female",
     "birthdate": "2023-07-11",
     "pass_name": "Самолла Миеликки",
-    "stpid": null,
+    "stpid": 27,
     "fid": null,
     "mid": null,
     "web": "https://t.me/damekko_petshop",
@@ -246,7 +323,7 @@
     "gender": "male",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сириус",
-    "stpid": null,
+    "stpid": 24,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/watson.alba.askeladd",
