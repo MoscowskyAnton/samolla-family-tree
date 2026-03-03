@@ -1,25 +1,7 @@
 [
   {
-    "id": 12,
-    "name": "Бойти",
-    "gender": "male",
-    "pids": [
-      13
-    ],
-    "isParent": true
-  },
-  {
-    "id": 13,
-    "name": "Кишасонь",
-    "gender": "female",
-    "pids": [
-      12
-    ],
-    "isParent": true
-  },
-  {
     "id": 14,
-    "name": "Богар",
+    "name": " Харкос",
     "gender": "male",
     "pids": [
       15
@@ -28,7 +10,7 @@
   },
   {
     "id": 15,
-    "name": "Феньеш",
+    "name": "Сатрафа",
     "gender": "female",
     "pids": [
       14
@@ -37,46 +19,82 @@
   },
   {
     "id": 16,
-    "name": "Хуути",
+    "name": "Рубик",
     "gender": "male",
     "pids": [
-      2
+      4
     ],
     "isParent": true
   },
   {
     "id": 17,
-    "name": "Мага",
+    "name": "Бойти",
     "gender": "male",
     "pids": [
-      3
+      18
     ],
     "isParent": true
   },
   {
     "id": 18,
-    "name": "Тарас",
-    "gender": "male",
+    "name": "Кишасонь",
+    "gender": "female",
     "pids": [
-      1,
-      3
+      17
     ],
     "isParent": true
   },
   {
     "id": 19,
-    "name": "Рубик",
+    "name": "Богар",
     "gender": "male",
     "pids": [
-      2
+      20
+    ],
+    "isParent": true
+  },
+  {
+    "id": 20,
+    "name": "Феньеш",
+    "gender": "female",
+    "pids": [
+      19
+    ],
+    "isParent": true
+  },
+  {
+    "id": 21,
+    "name": "Хуути",
+    "gender": "male",
+    "pids": [
+      4
+    ],
+    "isParent": true
+  },
+  {
+    "id": 22,
+    "name": "Мага",
+    "gender": "male",
+    "pids": [
+      5
     ],
     "isParent": true
   },
   {
     "id": 23,
-    "name": "Помёт П",
-    "fid": 17,
-    "mid": 3,
+    "name": "Тарас",
+    "gender": "male",
+    "pids": [
+      3,
+      5
+    ],
+    "isParent": true
+  },
+  {
+    "id": 25,
+    "name": "Помёт !",
+    "fid": 16,
+    "mid": 4,
     "gender": null,
     "isLitter": true,
     "tags": [
@@ -84,10 +102,21 @@
     ]
   },
   {
-    "id": 24,
+    "id": 29,
+    "name": "Помёт П",
+    "fid": 22,
+    "mid": 5,
+    "gender": null,
+    "isLitter": true,
+    "tags": [
+      "node-with-subtrees"
+    ]
+  },
+  {
+    "id": 30,
     "name": "Помёт С",
-    "fid": 18,
-    "mid": 3,
+    "fid": 23,
+    "mid": 5,
     "gender": null,
     "isLitter": true,
     "tags": [
@@ -96,158 +125,188 @@
   },
   {
     "id": 1,
+    "name": "Фандорин",
+    "gender": "male",
+    "birthdate": "2018-10-27",
+    "pass_name": "Kunok Kincse Dio",
+    "fid": 14,
+    "mid": 15,
+    "web": "https://vk.ru/id4185643",
+    "city": "Санкт-Петербург",
+    "master_note": "Пирожок ",
+    "litter_key": "14_15_10/27/2018",
+    "photo": "dog_photos/Fandorin_3_3_2026_21_28_21.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Кристи",
+    "gender": "female",
+    "birthdate": "2021-02-11",
+    "pass_name": "Samolla Ksora",
+    "stpid": 25,
+    "fid": null,
+    "mid": null,
+    "web": "https://vk.ru/id4185643",
+    "city": "Санкт-Петербург ",
+    "master_note": "drama queen",
+    "litter_key": "16_4_2/11/2021",
+    "photo": "dog_photos/Kristi_3_3_2026_21_15_45.jpg"
+  },
+  {
+    "id": 3,
     "name": "Аня",
     "gender": "female",
     "birthdate": "2021-10-24",
     "pass_name": "Kacifantos Annacska",
-    "fid": 12,
-    "mid": 13,
+    "fid": 17,
+    "mid": 18,
     "pids": [
-      18
+      23
     ],
-    "litter_key": "12_13_10/24/2021",
+    "litter_key": "17_18_10/24/2021",
     "photo": "dog_photos/Anya_10_14_2025_23_21_06.jpg"
   },
   {
-    "id": 2,
+    "id": 4,
     "name": "Нюша",
     "gender": "female",
     "birthdate": "2013-10-30",
     "pass_name": "Kunok Kincse Nyüszgö",
-    "fid": 14,
-    "mid": 15,
+    "fid": 19,
+    "mid": 20,
     "pids": [
       16,
-      19
+      21
     ],
-    "litter_key": "14_15_10/30/2013",
+    "litter_key": "19_20_10/30/2013",
     "photo": "dog_photos/Nyusha_10_14_2025_23_18_22.jpg"
   },
   {
-    "id": 3,
+    "id": 5,
     "name": "Палка",
     "gender": "female",
     "birthdate": "2018-02-02",
     "pass_name": "Самолла Гарпалика",
-    "fid": 16,
-    "mid": 2,
+    "fid": 21,
+    "mid": 4,
     "pids": [
-      17,
-      18
+      22,
+      23
     ],
     "city": "Питер",
-    "litter_key": "16_2_2/2/2018",
+    "litter_key": "21_4_2/2/2018",
     "photo": "dog_photos/Palka_10_14_2025_23_14_58.jpg"
   },
   {
-    "id": 4,
+    "id": 6,
     "name": "Кукла",
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Паприка",
-    "stpid": 23,
+    "stpid": 29,
     "fid": null,
     "mid": null,
     "city": "Питер",
-    "litter_key": "17_3_8/10/2024",
+    "litter_key": "22_5_8/10/2024",
     "photo": "dog_photos/Kukla_10_14_2025_23_12_37.jpg"
   },
   {
-    "id": 5,
+    "id": 7,
     "name": "Сарра",
     "gender": "female",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сарин",
-    "stpid": 24,
+    "stpid": 30,
     "fid": null,
     "mid": null,
     "web": "",
     "city": "Москва",
     "master_note": "Самая маленькая и самая наглая)",
-    "litter_key": "18_3_3/6/2025",
+    "litter_key": "23_5_3/6/2025",
     "photo": "dog_photos/Sarra_10_7_2025_13_43_42.jpg"
   },
   {
-    "id": 6,
+    "id": 8,
     "name": "Драккар",
     "gender": "male",
     "birthdate": "2025-01-03",
     "pass_name": "Самолла Ритм",
-    "fid": 18,
-    "mid": 1,
+    "fid": 23,
+    "mid": 3,
     "web": "https://vk.com/mudialiexpress",
     "city": "Москва",
-    "litter_key": "18_1_1/3/2025",
+    "litter_key": "23_3_1/3/2025",
     "photo": "dog_photos/Drakkar_10_3_2025_20_11_10.jpg"
   },
   {
-    "id": 7,
+    "id": 9,
     "name": "Райдо",
     "gender": "male",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пряник",
-    "stpid": 23,
+    "stpid": 29,
     "fid": null,
     "mid": null,
     "city": "Санкт-Петербург ",
-    "litter_key": "17_3_8/10/2024",
+    "litter_key": "22_5_8/10/2024",
     "photo": "dog_photos/Raydo_10_1_2025_7_32_18.jpg"
   },
   {
-    "id": 8,
+    "id": 10,
     "name": "Сейви",
     "gender": "female",
     "birthdate": "2021-02-11",
     "pass_name": "Самолла Ксена",
-    "fid": 19,
-    "mid": 2,
+    "stpid": 25,
+    "fid": null,
+    "mid": null,
     "web": "https://vk.com/tw0_geese https://t.me/toothy_goose",
     "city": "Екатеринбург",
     "master_note": "Маленький ураган летящий за тарелками  :)",
-    "litter_key": "19_2_2/11/2021",
+    "litter_key": "16_4_2/11/2021",
     "photo": "dog_photos/Seyvi_9_30_2025_20_33_46.jpg"
   },
   {
-    "id": 9,
+    "id": 11,
     "name": "Дина",
     "gender": "female",
     "birthdate": "2024-08-10",
     "pass_name": "Самолла Пиратка",
-    "stpid": 23,
+    "stpid": 29,
     "fid": null,
     "mid": null,
     "web": "",
     "city": "Санкт-Петербург",
     "master_note": "Стремительная, умная, выносливая, громкая",
-    "litter_key": "17_3_8/10/2024",
+    "litter_key": "22_5_8/10/2024",
     "photo": "dog_photos/Dina_9_30_2025_20_24_46.jpg"
   },
   {
-    "id": 10,
+    "id": 12,
     "name": "Варенька",
     "gender": "female",
     "birthdate": "2023-07-11",
     "pass_name": "Самолла Миеликки",
-    "fid": 17,
-    "mid": 3,
+    "fid": 22,
+    "mid": 5,
     "web": "https://t.me/damekko_petshop",
     "city": "Санкт-Петербург",
-    "litter_key": "17_3_7/11/2023",
+    "litter_key": "22_5_7/11/2023",
     "photo": "dog_photos/Varenka_9_30_2025_20_22_46.jpg"
   },
   {
-    "id": 11,
+    "id": 13,
     "name": "Аскеладд",
     "gender": "male",
     "birthdate": "2025-03-06",
     "pass_name": "Самолла Сириус",
-    "stpid": 24,
+    "stpid": 30,
     "fid": null,
     "mid": null,
     "web": "https://vk.com/watson.alba.askeladd",
     "city": "Москва",
     "master_note": "Zasranetz! ",
-    "litter_key": "18_3_3/6/2025",
+    "litter_key": "23_5_3/6/2025",
     "photo": "dog_photos/Askeladd_10_7_2025_19_29_25.jpg"
   }
 ]
